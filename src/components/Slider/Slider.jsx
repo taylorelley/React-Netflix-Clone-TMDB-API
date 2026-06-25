@@ -56,7 +56,7 @@ function Slider() {
                 <p className="slider-description"> {upcomingMovies[index]?.overview?.slice(0, 130)}..</p>
                 <Genres moviesGenres={upcomingMovies[index]?.genre_ids} />
                 <p>Release Date: {upcomingMovies[index]?.release_date && upcomingMovies[index].release_date.split('-').reverse().join('-').replace(/(\d{2})-(\d{2})-(\d{4})/, '$2-$1-$3')}</p>
-                <Ratings movieRating={upcomingMovies[index]?.vote_average / 2} />
+                <Ratings movieRating={upcomingMovies[index] ? upcomingMovies[index].vote_average / 2 : 0} />
                 <p className="see-more-btn" onClick={handlePage}>See Details</p>
             </div>
         </div>
