@@ -51,19 +51,19 @@ E2E (Playwright, 15 tests) and the production build (`npx next build`) are also 
 
 ## Scripts
 
-| Script                  | Purpose                                  |
-| ----------------------- | ---------------------------------------- |
-| `npm run dev`           | Start the Next.js dev server (Turbopack) |
-| `npm run build`         | Production build (Turbopack)             |
-| `npm start`             | Run the production build                 |
-| `npm run lint` | ESLint (Next.js + React + TS rules) |
-| `npm run format` | Prettier write all `*.{ts,tsx,js,jsx,json,css,md,yml}` |
-| `npm run format:check` | Prettier verify (used in CI) |
-| `npm run typecheck` | `tsc --noEmit` for app + test configs |
-| `npm run test:run` | Vitest unit tests (single run) |
-| `npm run test:coverage` | Vitest with v8 coverage report |
-| `npm run test` | Vitest watch mode |
-| `npm run e2e` | Playwright end-to-end tests |
+| Script                  | Purpose                                                |
+| ----------------------- | ------------------------------------------------------ |
+| `npm run dev`           | Start the Next.js dev server (Turbopack)               |
+| `npm run build`         | Production build (Turbopack)                           |
+| `npm start`             | Run the production build                               |
+| `npm run lint`          | ESLint (Next.js + React + TS rules)                    |
+| `npm run format`        | Prettier write all `*.{ts,tsx,js,jsx,json,css,md,yml}` |
+| `npm run format:check`  | Prettier verify (used in CI)                           |
+| `npm run typecheck`     | `tsc --noEmit` for app + test configs                  |
+| `npm run test:run`      | Vitest unit tests (single run)                         |
+| `npm run test:coverage` | Vitest with v8 coverage report                         |
+| `npm run test`          | Vitest watch mode                                      |
+| `npm run e2e`           | Playwright end-to-end tests                            |
 
 ## Routes
 
