@@ -1,0 +1,83 @@
+.signupContainer {
+  min-height: 100vh;
+  margin-top: var(--header-height);
+  color: var(--white);
+  font-size: 1.2rem;
+  padding-top: 20vh;
+}
+.signupLight {
+  background-color: var(--light-bg);
+  color: black;
+}
+.signupContainer a {
+  color: var(--red);
+  font-style: italic;
+  cursor: pointer;
+}
+.signupForm {
+  width: 50%;
+  margin: 0 auto;
+  min-height: 50vh;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 0px rgba(118, 118, 118, 0.75);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.titleContainer p {
+  margin-top: 5px;
+}
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin: 20px auto;
+}
+.inputWrapper input {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+.inputWrapperLight input {
+  border: solid 1px var(--footer-bg);
+}
+.cancelbtn,
+.signupbtn {
+  border: none;
+  padding: 5px 16px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+.successMessage {
+  font-size: 1.5rem;
+  font-style: italic;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 60%;
+  margin: 20px auto;
+}
+.cancelbtn {
+  background-color: var(--red);
+}
+.signupbtn {
+  background-color: green;
+}
+@media (max-width: 768px) {
+  .signupForm {
+    width: 95%;
+  }
+  .inputWrapper,
+  .buttonContainer {
+    width: 80%;
+  }
+}
+@media (max-width: 600px) {
+  .signupContainer {
+    margin-top: var(--header-height-mobile);
+  }
+}

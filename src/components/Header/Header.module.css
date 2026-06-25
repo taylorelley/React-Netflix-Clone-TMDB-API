@@ -1,0 +1,116 @@
+.headerContainer,
+.navigationContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--white);
+}
+.headerContainer {
+  height: var(--header-height);
+  background-color: var(--transparent-bg);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  padding: 0 20px;
+  z-index: 1;
+}
+.headerLight {
+  background-color: var(--light-bg);
+}
+.logo {
+  color: var(--red);
+  font-size: 2rem;
+  font-weight: bold;
+}
+.searchContainer {
+  width: 40%;
+  text-align: right;
+  position: relative;
+}
+.searchInput {
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  width: 100%;
+  background-color: black;
+  color: var(--grey-text);
+}
+.inputActive {
+  border-radius: 0;
+}
+.searchInput::placeholder {
+  color: var(--grey-text);
+}
+.searchInput:focus {
+  outline: none;
+  border-radius: 0;
+}
+.inputLight {
+  background-color: var(--footer-bg);
+  color: var(--white);
+}
+.inputLight::placeholder {
+  color: var(--white);
+}
+.searchResultsContainer {
+  background-color: gray;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  height: 500px;
+  width: 100%;
+  animation: input 0.5s ease 0s 1 normal forwards;
+  overflow: scroll;
+}
+.themeButtons {
+  background-color: black;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: solid 1px var(--grey);
+}
+.themeIcon {
+  font-size: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 5px;
+}
+.themeIconActive {
+  background-color: var(--red);
+  border-radius: 50%;
+  padding: 0;
+}
+.headerButtonsContainer {
+  display: flex;
+  align-items: center;
+}
+@keyframes input {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 600px) {
+  .headerContainer {
+    flex-direction: column;
+    height: var(--header-height-mobile);
+    padding: 10px 0;
+    justify-content: space-around;
+  }
+  .searchContainer {
+    margin-top: 10px;
+  }
+}
+@media (max-width: 468px) {
+  .logo {
+    font-size: 1.5rem;
+  }
+  .searchContainer {
+    width: 60%;
+  }
+}

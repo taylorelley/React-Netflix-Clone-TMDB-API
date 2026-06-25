@@ -19,12 +19,12 @@ test.describe('Auth flow', () => {
       localStorage.setItem('token', 'preset-token');
     });
     await page.goto('/signin');
-    await expect(page.getByText(/already loggedin/i)).toBeVisible();
+    await expect(page.getByText(/already logged in/i)).toBeVisible();
   });
 
-  test('signin form submit triggers request to /users/login (network mocked)', async ({ page }) => {
+  test('signin form submit triggers request to /api/users/login (network mocked)', async ({ page }) => {
     const requests = [];
-    await page.route('**/users/login', async (route, request) => {
+    await page.route('**/api/users/login', async (route, request) => {
       requests.push(request.postDataJSON());
       await route.fulfill({
         contentType: 'application/json',
@@ -35,7 +35,6 @@ test.describe('Auth flow', () => {
     await page.getByPlaceholder('Enter Email').fill('test@example.com');
     await page.getByPlaceholder('Enter Password').fill('secret');
     await page.getByRole('button', { name: /Sign In/i }).click();
-    // Wait for the request to be made
     await expect.poll(() => requests.length).toBe(1);
     expect(requests[0]).toEqual({ email: 'test@example.com', password: 'secret' });
   });

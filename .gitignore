@@ -1,3 +1,9 @@
+# Build output
+.next/
+out/
+dist/
+build/
+
 # Logs
 logs
 *.log
@@ -9,8 +15,7 @@ lerna-debug.log*
 
 node_modules
 .env
-dist
-dist-ssr
+.env.local
 *.local
 
 # Test artifacts
@@ -28,3 +33,6 @@ test-results
 *.njsproj
 *.sln
 *.sw?
+
+# TypeScript
+*.tsbuildinfo

@@ -1,102 +1,88 @@
 /**
- * TMDB API client. Centralizes all API calls to themoviedb.org.
- * Every module imports from here — no direct axios calls elsewhere.
+ * TMDB API client. Centralizes all API calls to the local Next.js proxy.
  *
- * To use, set VITE_TMDB_API_KEY and VITE_TMDB_BASE_URL in .env.
+ * To use, set TMDB_API_KEY in `.env.local` (server-side only — never
+ * exposed to the client). All hooks import from this module; no
+ * direct fetch/axios calls live elsewhere.
  */
-import axios, { type AxiosInstance } from 'axios';
-import type { Movie, Genre, Review } from '../types/tmdb';
+import type { Movie, Genre, Review } from '@/types/tmdb';
 
-const BASE_URL: string =
-  (import.meta.env.VITE_TMDB_BASE_URL as string | undefined) ??
-  'https://api.themoviedb.org/3';
-const API_KEY: string = import.meta.env.VITE_TMDB_API_KEY as string;
+const BASE_URL = '/api/tmdb';
 
-const client: AxiosInstance = axios.create({ baseURL: BASE_URL });
+async function get<T>(path: string, params?: Record<string, string | number | undefined>): Promise<T> {
+  const qs = new URLSearchParams();
+  if (params) {
+    for (const [k, v] of Object.entries(params)) {
+      if (v !== undefined && v !== null) qs.set(k, String(v));
+    }
+  }
+  const url = qs.toString() ? `${BASE_URL}/${path}?${qs}` : `${BASE_URL}/${path}`;
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`TMDB request failed: ${res.status}`);
+  }
+  return res.json() as Promise<T>;
+}
 
 /**
  * Fetches a paginated list of popular movies.
- * @param page Page number, defaults to 1
- * @returns Array of movie objects
  */
-export const getPopularMovies = (page: number = 1): Promise<Movie[]> =>
-  client
-    .get('/movie/popular', { params: { api_key: API_KEY, page } })
-    .then((r) => r.data.results);
+export function getPopularMovies(page = 1): Promise<Movie[]> {
+  return get('movie/popular', { page }).then(d => (d as { results: Movie[] }).results);
+}
 
 /**
  * Fetches top-rated movies (first page, first 10 results).
- * @returns Array of up to 10 top-rated movie objects
  */
-export const getTopRatedMovies = (): Promise<Movie[]> =>
-  client
-    .get('/movie/top_rated', { params: { api_key: API_KEY, page: 1 } })
-    .then((r) => (r.data.results ?? []).slice(0, 10));
+export function getTopRatedMovies(): Promise<Movie[]> {
+  return get('movie/top_rated', { page: 1 }).then(
+    d => ((d as { results?: Movie[] }).results || []).slice(0, 10)
+  );
+}
 
 /**
  * Fetches upcoming movies.
- * @returns Array of upcoming movie objects
  */
-export const getUpcomingMovies = (): Promise<Movie[]> =>
-  client
-    .get('/movie/upcoming', { params: { api_key: API_KEY } })
-    .then((r) => r.data.results);
+export function getUpcomingMovies(): Promise<Movie[]> {
+  return get('movie/upcoming').then(d => (d as { results: Movie[] }).results);
+}
 
 /**
  * Fetches full movie details by ID.
- * @param id TMDB movie id (number or numeric string)
- * @returns Movie object with detail fields populated
  */
-export const getMovieDetails = (id: number | string): Promise<Movie> =>
-  client
-    .get(`/movie/${id}`, { params: { api_key: API_KEY } })
-    .then((r) => r.data);
+export function getMovieDetails(id: string | number): Promise<Movie> {
+  return get<Movie>(`movie/${id}`);
+}
 
 /**
  * Fetches YouTube trailer key for a movie.
- * @param id TMDB movie id
- * @returns YouTube video key, or null when no YouTube+Trailer match
  */
-export const getMovieTrailer = (id: number | string): Promise<string | null> =>
-  client
-    .get(`/movie/${id}/videos`, {
-      params: { api_key: API_KEY, language: 'en-US' },
-    })
-    .then(
-      (r) =>
-        r.data.results.find(
-          (v: { site: string; type: string; key: string }) =>
-            v.site === 'YouTube' && v.type === 'Trailer',
-        )?.key ?? null,
-    );
+export function getMovieTrailer(id: string | number): Promise<string | null> {
+  return get(`movie/${id}/videos`, { language: 'en-US' }).then(d => {
+    const results = (d as { results: { key: string; site: string; type: string }[] }).results;
+    return results.find(v => v.site === 'YouTube' && v.type === 'Trailer')?.key ?? null;
+  });
+}
 
 /**
  * Fetches reviews for a movie.
- * @param id TMDB movie id
- * @returns Object containing reviews array and total count
  */
-export const getMovieReviews = (
-  id: number | string,
-): Promise<{ results: Review[]; total_results: number }> =>
-  client
-    .get(`/movie/${id}/reviews`, { params: { api_key: API_KEY } })
-    .then((r) => r.data);
+export function getMovieReviews(
+  id: string | number
+): Promise<{ results: Review[]; total_results: number }> {
+  return get<{ results: Review[]; total_results: number }>(`movie/${id}/reviews`);
+}
 
 /**
  * Fetches the full genre list.
- * @returns Array of genre objects
  */
-export const getGenres = (): Promise<Genre[]> =>
-  client
-    .get('/genre/movie/list', { params: { api_key: API_KEY } })
-    .then((r) => r.data.genres);
+export function getGenres(): Promise<Genre[]> {
+  return get('genre/movie/list').then(d => (d as { genres: Genre[] }).genres);
+}
 
 /**
  * Searches movies by query string.
- * @param query Search query
- * @returns Array of movie objects matching the query
  */
-export const searchMovies = (query: string): Promise<Movie[]> =>
-  client
-    .get('/search/movie', { params: { api_key: API_KEY, query } })
-    .then((r) => r.data.results);
+export function searchMovies(query: string): Promise<Movie[]> {
+  return get('search/movie', { query }).then(d => (d as { results: Movie[] }).results);
+}

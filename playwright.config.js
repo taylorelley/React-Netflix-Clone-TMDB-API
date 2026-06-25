@@ -13,10 +13,13 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   webServer: {
-    command: 'npm run preview -- --port 4173 --strictPort',
+    command: 'npx next start -p 4173',
     url: 'http://localhost:4173',
     reuseExistingServer: !process.env.CI,
-    timeout: 60_000,
+    timeout: 120_000,
+    env: {
+      TMDB_API_KEY: process.env.TMDB_API_KEY || 'e2e-fake-key',
+    },
   },
   projects: [
     {

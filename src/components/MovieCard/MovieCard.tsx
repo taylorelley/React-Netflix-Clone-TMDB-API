@@ -1,8 +1,10 @@
-import './movie.css';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import { type CSSProperties } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Ratings from '../Ratings/Ratings';
-import type { Movie } from '../../types/tmdb';
+import type { Movie } from '@/types/tmdb';
+import styles from './MovieCard.module.css';
 
 interface MovieCardProps {
   data?: Movie;
@@ -15,7 +17,6 @@ interface MovieCardProps {
 
 /**
  * Reusable movie card with poster image, rating, and click navigation.
- * @param props Movie data + display options
  */
 export default function MovieCard({
   data,
@@ -26,10 +27,15 @@ export default function MovieCard({
   radius,
 }: MovieCardProps) {
   const rating = data ? Math.round(data.vote_average / 2) : 0;
-  const navigate = useNavigate();
+  const router = useRouter();
+
+  const wrapperClass =
+    cardStyle === 'top-rated-card' ? styles.topRatedCard : styles.popularCard;
 
   const imageStyle: CSSProperties = {
-    backgroundImage: `url("https://image.tmdb.org/t/p/w500/${imageUrl ?? ''}")`,
+    backgroundImage: imageUrl
+      ? `url("https://image.tmdb.org/t/p/w500/${imageUrl}")`
+      : undefined,
     width: width,
     height: height,
     backgroundRepeat: 'no-repeat',
@@ -45,17 +51,21 @@ export default function MovieCard({
 
   const handleClick = (): void => {
     if (data) {
-      navigate(`/moviedetails/${data.id}`);
+      router.push(`/moviedetails/${data.id}`);
     }
   };
 
   return (
-    <div className={cardStyle} onClick={handleClick}>
+    <div
+      className={wrapperClass}
+      onClick={handleClick}
+      data-testid="movie-card"
+    >
       <div style={imageStyle}>
-        <div className="movie-info-top">
+        <div className={styles.movieInfoTop}>
           <Ratings movieRating={rating} />
         </div>
-        <div className="movie-info-bottom">
+        <div className={styles.movieInfoBottom}>
           <p>{data?.title}</p>
           <p>Rating: {rating}</p>
         </div>

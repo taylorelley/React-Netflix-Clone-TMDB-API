@@ -1,0 +1,24 @@
+.searchResultsItem {
+  background-color: var(--dark-bg);
+  color: var(--white);
+  height: 80px;
+  margin-bottom: 2px;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 0;
+  cursor: pointer;
+  text-align: center;
+}
+.searchResultsItem p {
+  padding: 20px;
+  text-align: center;
+}
+.searchResultsItem:hover {
+  border: solid 1px gray;
+}
+.resultImg {
+  height: 80px;
+  width: 100px;
+  object-fit: cover;
+  border-radius: 20px;
+}

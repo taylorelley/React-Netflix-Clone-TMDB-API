@@ -1,74 +1,72 @@
+'use client';
+
 import { useContext, useState } from 'react';
-import { ThemeContext } from '../../context/ThemeContext';
-import { Link } from 'react-router-dom';
-import { useSearch } from '../../hooks/useSearch';
+import Link from 'next/link';
+import { ThemeContext } from '@/context/ThemeContext';
+import { useSearch } from '@/hooks/useSearch';
 import SearchResults from '../SearchResults/SearchResults';
 import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md';
-import './header.css';
+import styles from './Header.module.css';
 
-function Header() {
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
+export default function Header() {
+  const ctx = useContext(ThemeContext);
+  const darkMode = ctx?.darkMode ?? true;
+  const setDarkMode = ctx?.setDarkMode ?? (() => {});
   const [query, setQuery] = useState<string>('');
   const { results: searchResults } = useSearch(query);
 
   const handleTheme = (): void => {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
-    localStorage.setItem('darkMode', JSON.stringify(newDarkMode));
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('darkMode', JSON.stringify(newDarkMode));
+    }
   };
 
+  const containerClass = darkMode
+    ? styles.headerContainer
+    : `${styles.headerContainer} ${styles.headerLight}`;
+
   return (
-    <div
-      className={
-        darkMode ? 'header-container' : 'header-container header-light'
-      }
-    >
-      <Link className="logo" to="/">
-        Netflix
+    <div className={containerClass}>
+      <Link className={styles.logo} href="/">
+        Cinetrail
       </Link>
-      <div className="search-container">
+      <div className={styles.searchContainer}>
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className={`search-input ${query && 'input-active'} ${!query && !darkMode && query}`}
+          className={`${styles.searchInput} ${query ? styles.inputActive : ''}`}
           placeholder="Search movies..."
         />
 
         {query.trim() !== '' && (
-          <div className="search-results-container">
-            {searchResults.map((movie) => {
-              return (
-                <SearchResults
-                  setQuery={setQuery}
-                  key={movie.id}
-                  movie={movie}
-                />
-              );
-            })}
+          <div className={styles.searchResultsContainer}>
+            {searchResults.map((movie) => (
+              <SearchResults setQuery={setQuery} key={movie.id} movie={movie} />
+            ))}
           </div>
         )}
       </div>
 
-      <div className="header-buttons-container">
-        <div className="theme-button-container">
+      <div className={styles.headerButtonsContainer}>
+        <div className={styles.themeButtons}>
           {darkMode ? (
-            <div className="theme-buttons">
+            <>
               <MdOutlineLightMode
                 onClick={handleTheme}
-                className="theme-icon"
+                className={styles.themeIcon}
               />
-              <MdOutlineDarkMode className="theme-icon theme-icon-active" />
-            </div>
+              <MdOutlineDarkMode className={`${styles.themeIcon} ${styles.themeIconActive}`} />
+            </>
           ) : (
-            <div className="theme-buttons">
-              <MdOutlineLightMode className="theme-icon theme-icon-active" />
-              <MdOutlineDarkMode onClick={handleTheme} className="theme-icon" />
-            </div>
+            <>
+              <MdOutlineLightMode className={`${styles.themeIcon} ${styles.themeIconActive}`} />
+              <MdOutlineDarkMode onClick={handleTheme} className={styles.themeIcon} />
+            </>
           )}
         </div>
       </div>
     </div>
   );
 }
-
-export default Header;

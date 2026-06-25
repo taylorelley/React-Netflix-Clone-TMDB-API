@@ -34,24 +34,22 @@ const genres = { genres: [{ id: 28, name: 'Action' }] };
 test.describe('Home page', () => {
   test.beforeEach(async ({ page }) => {
     await mockTmdbApi(page, {
-      '**/movie/popular*': popularResponse,
-      '**/movie/top_rated*': topRatedResponse,
-      '**/movie/upcoming*': upcomingResponse,
-      '**/genre/movie/list*': genres,
+      '**/api/tmdb/movie/popular*': popularResponse,
+      '**/api/tmdb/movie/top_rated*': topRatedResponse,
+      '**/api/tmdb/movie/upcoming*': upcomingResponse,
+      '**/api/tmdb/genre/movie/list*': genres,
     });
   });
 
   test('renders hero slider with upcoming movie', async ({ page }) => {
     await page.goto('/');
-    // Slider h1 is in the slider-info block
-    await expect(page.locator('.slider-info h1')).toHaveText('Upcoming 1');
+    await expect(page.locator('[class*="sliderInfo"] h1')).toHaveText('Upcoming 1');
   });
 
   test('renders popular section title and cards', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByText('Popular Movies')).toBeVisible();
-    // MovieCards exist in DOM; CSS hides text until hover
-    await expect(page.locator('.popular-card')).toHaveCount(2);
+    await expect(page.locator('[data-testid="movie-card"]')).toHaveCount(3);
   });
 
   test('renders top rated section title', async ({ page }) => {
@@ -70,6 +68,7 @@ test.describe('Home page', () => {
   test('clicking page 2 sets page state (page-2 highlighted)', async ({ page }) => {
     await page.goto('/');
     await page.getByText('2', { exact: true }).click();
-    await expect(page.getByText('2', { exact: true })).toHaveClass(/current-page/);
+    const current = page.locator('[class*="currentPage"]');
+    await expect(current).toHaveText('2');
   });
 });

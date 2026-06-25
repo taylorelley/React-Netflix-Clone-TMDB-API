@@ -17,11 +17,11 @@ const searchResponse = {
 test.describe('Search', () => {
   test.beforeEach(async ({ page }) => {
     await mockTmdbApi(page, {
-      '**/movie/popular*': popularResponse,
-      '**/movie/top_rated*': topRatedResponse,
-      '**/movie/upcoming*': upcomingResponse,
-      '**/genre/movie/list*': genres,
-      '**/search/movie*': searchResponse,
+      '**/api/tmdb/movie/popular*': popularResponse,
+      '**/api/tmdb/movie/top_rated*': topRatedResponse,
+      '**/api/tmdb/movie/upcoming*': upcomingResponse,
+      '**/api/tmdb/genre/movie/list*': genres,
+      '**/api/tmdb/search/movie*': searchResponse,
     });
   });
 
@@ -34,33 +34,20 @@ test.describe('Search', () => {
   });
 
   test('clicking a search result navigates to movie details', async ({ page }) => {
-    // Mock the detail endpoint
-    await page.route('**/movie/1*', (route) =>
-      route.fulfill({
-        contentType: 'application/json',
-        body: JSON.stringify({
-          id: 1,
-          title: 'Inception Result',
-          overview: 'Dream heist.',
-          poster_path: '/search1.jpg',
-          vote_average: 8.4,
-          genres: [{ id: 28, name: 'Action' }],
-          runtime: 148,
-          budget: 160000000,
-          tagline: 'Your mind is the scene of the crime.',
-          status: 'Released',
-        }),
-      })
-    );
-    await page.route('**/movie/1/videos*', (route) =>
-      route.fulfill({
-        contentType: 'application/json',
-        body: JSON.stringify({ results: [{ key: 'k', site: 'YouTube', type: 'Trailer' }] }),
-      })
-    );
-    await page.route('**/movie/1/reviews*', (route) =>
-      route.fulfill({ contentType: 'application/json', body: JSON.stringify({ results: [], total_results: 0 }) })
-    );
+    await mockTmdbApi(page, {
+      '**/api/tmdb/movie/1*': {
+        id: 1,
+        title: 'Inception Result',
+        overview: 'Dream heist.',
+        poster_path: '/search1.jpg',
+        vote_average: 8.4,
+        genres: [{ id: 28, name: 'Action' }],
+        runtime: 148,
+        budget: 160000000,
+        tagline: 'Your mind is the scene of the crime.',
+        status: 'Released',
+      },
+    });
 
     await page.goto('/');
     const input = page.getByPlaceholder('Search movies...');

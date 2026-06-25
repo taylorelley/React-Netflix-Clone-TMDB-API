@@ -1,3 +1,5 @@
+'use client';
+
 import { type ReactNode } from 'react';
 import ThemeContextProvider from './ThemeContext';
 import UserContextProvider from './UserContext';

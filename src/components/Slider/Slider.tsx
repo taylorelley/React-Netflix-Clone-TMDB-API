@@ -1,29 +1,41 @@
+'use client';
+
 import { useState, type CSSProperties } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
-import { useUpcomingMovies } from '../../hooks/useUpcomingMovies';
+import { useUpcomingMovies } from '@/hooks/useUpcomingMovies';
 import Genres from '../Genres/Genres';
 import Ratings from '../Ratings/Ratings';
-import './slider.css';
+import styles from './Slider.module.css';
+
+function formatDate(iso: string | null | undefined): string {
+  if (!iso) return '';
+  const [y, m, d] = iso.split('-');
+  return `${d}-${m}-${y}`;
+}
 
 /**
  * Hero carousel for upcoming movies.
  * No props — uses useUpcomingMovies hook internally.
  */
-function Slider() {
+export default function Slider() {
   const { movies: upcomingMovies } = useUpcomingMovies();
   const [index, setIndex] = useState<number>(0);
   const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handlePage = (): void => {
-    scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    if (upcomingMovies[index]) {
-      navigate(`/moviedetails/${upcomingMovies[index]?.id}`);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
+    const current = upcomingMovies[index];
+    if (current) {
+      router.push(`/moviedetails/${current.id}`);
     }
   };
 
   const handleRight = (): void => {
+    if (upcomingMovies.length === 0) return;
     if (index === upcomingMovies.length - 1) {
       setIndex(0);
     } else {
@@ -32,6 +44,7 @@ function Slider() {
   };
 
   const handleLeft = (): void => {
+    if (upcomingMovies.length === 0) return;
     if (index === 0) {
       setIndex(upcomingMovies.length - 1);
     } else {
@@ -42,7 +55,9 @@ function Slider() {
   const current = upcomingMovies[index];
 
   const sliderStyle: CSSProperties = {
-    backgroundImage: `url("${imageBaseUrl}${current?.backdrop_path ?? ''}")`,
+    backgroundImage: current?.backdrop_path
+      ? `url("${imageBaseUrl}${current.backdrop_path}")`
+      : undefined,
     backgroundSize: 'cover',
     backgroundPosition: 'top',
     backgroundRepeat: 'no-repeat',
@@ -52,32 +67,21 @@ function Slider() {
 
   return (
     <div style={sliderStyle}>
-      <div className="slider-overlay"></div>
-      <MdKeyboardArrowLeft onClick={handleLeft} className="left-arrow" />
-      <MdKeyboardArrowRight onClick={handleRight} className="right-arrow" />
-      <div className="slider-info">
+      <div className={styles.sliderOverlay} />
+      <MdKeyboardArrowLeft onClick={handleLeft} className={styles.leftArrow} />
+      <MdKeyboardArrowRight onClick={handleRight} className={styles.rightArrow} />
+      <div className={styles.sliderInfo}>
         <h1>{current?.title}</h1>
-        <p className="slider-description">
-          {' '}
+        <p className={styles.sliderDescription}>
           {current?.overview?.slice(0, 130)}..
         </p>
         <Genres moviesGenres={current?.genre_ids} />
-        <p>
-          Release Date:{' '}
-          {current?.release_date &&
-            current.release_date
-              .split('-')
-              .reverse()
-              .join('-')
-              .replace(/(\d{2})-(\d{2})-(\d{4})/, '$2-$1-$3')}
-        </p>
+        <p>Release Date: {formatDate(current?.release_date)}</p>
         <Ratings movieRating={current ? current.vote_average / 2 : 0} />
-        <p className="see-more-btn" onClick={handlePage}>
+        <p className={styles.seeMoreBtn} onClick={handlePage}>
           See Details
         </p>
       </div>
     </div>
   );
 }
-
-export default Slider;

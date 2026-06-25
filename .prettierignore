@@ -1,7 +1,0 @@
-node_modules
-dist
-coverage
-playwright-report
-package-lock.json
-e2e
-public
