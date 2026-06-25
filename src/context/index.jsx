@@ -1,7 +1,10 @@
-import ThemeContextProvider from './ThemeContext'
-import UserContextProvider from './UserContext'
+import ThemeContextProvider from './ThemeContext';
+import UserContextProvider from './UserContext';
 
-export default function CombinedContextProvider(props){
+/**
+ * Combines all context providers into a single wrapper.
+ */
+export default function CombinedContextProvider(props) {
     return(
         <ThemeContextProvider>
             <UserContextProvider>

@@ -1,8 +1,14 @@
-import React,{useState} from 'react'
-import { useNavigate} from "react-router-dom";
-import noImage from '../../assets/no-image.svg.png'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import noImage from '../../assets/no-image.svg.png';
 
-function SearchResults({movie,setQuery}) {
+/**
+ * Single search result item with click navigation.
+ * @param {Object} props
+ * @param {Object} props.movie
+ * @param {Function} props.setQuery
+ */
+function SearchResults({ movie, setQuery }) {
     const navigate = useNavigate();
     const [imageError, setImageError] = useState(false);
 
