@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { render, screen, act, renderHook } from '@testing-library/react';
 import ThemeContextProvider, { ThemeContext } from './ThemeContext';
 

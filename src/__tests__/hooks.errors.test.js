@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
 
 vi.mock('../lib/tmdb', () => import('../test/mocks/tmdb'));
@@ -10,7 +10,6 @@ import { useGenres } from '../hooks/useGenres';
 import * as m from '../test/mocks/tmdb';
 
 beforeEach(async () => {
-  const mocks = await import('../test/mocks/tmdb');
   m.getPopularMovies.mockResolvedValue([
     { id: 1, title: 'Test Movie', vote_average: 7, poster_path: '/x.jpg', genre_ids: [28] },
   ]);
