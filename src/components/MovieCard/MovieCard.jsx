@@ -1,10 +1,19 @@
-import React from 'react';
 import './movie.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Ratings from '../Ratings/Ratings';
 
+/**
+ * Reusable movie card with poster image, rating, and click navigation.
+ * @param {Object} props
+ * @param {Object} props.data - Movie data object
+ * @param {string} props.imageUrl - TMDB image path fragment
+ * @param {string} [props.width]
+ * @param {string} [props.height]
+ * @param {string} [props.cardStyle]
+ * @param {string} [props.radius]
+ */
 export default function MovieCard({ data, imageUrl, width, height, cardStyle, radius }) {
-  const rating = Math.round(data?.vote_average / 2);
+  const rating = data ? Math.round(data.vote_average / 2) : 0;
   const navigate = useNavigate();
 
   const imageStyle = {
