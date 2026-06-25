@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+:root {
+  --red: #e50916;
+  --white: #fff;
+  --black: #000;
+  --header-height: 70px;
+  --header-height-mobile: 150px;
+  --dark-bg: #221f1f;
+  --light-bg: #fff;
+  --footer-bg: #373232;
+  --transparent-bg: rgba(20, 20, 20, 0.7);
+  --grey: #2d2d2d;
+  --grey-text: #9b9b9b;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: var(--dark-bg);
+}

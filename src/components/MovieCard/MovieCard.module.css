@@ -1,0 +1,58 @@
+.popularCard {
+  cursor: pointer;
+  margin: 20px 20px 0 0;
+}
+.movieInfoTop {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  padding: 5px;
+  color: var(--red);
+  text-align: center;
+}
+.movieInfoBottom {
+  visibility: hidden;
+  height: auto;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background-color: var(--transparent-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  flex-wrap: wrap;
+}
+.movieInfoBottom p {
+  text-align: center;
+}
+.movieInfoBottom p:last-child {
+  color: rgb(253, 204, 13);
+}
+.popularCard:hover .movieInfoTop {
+  visibility: visible;
+  animation: myAnim 1s ease 0s 1 normal forwards;
+}
+.popularCard:hover .movieInfoBottom {
+  visibility: visible;
+  animation: myAnim 1s ease 0s 1 normal forwards;
+}
+.topRatedCard {
+  padding: 10px;
+  font-size: 0.75rem;
+  margin: 0 auto;
+  cursor: pointer;
+  color: var(--white);
+}
+.topRatedCard p {
+  margin-top: 10px;
+}
+@keyframes myAnim {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
