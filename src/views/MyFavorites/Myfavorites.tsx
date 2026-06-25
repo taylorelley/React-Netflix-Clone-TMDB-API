@@ -67,9 +67,7 @@ export default function MyFavorites() {
           );
         })
       ) : (
-        <p style={{ color: 'white' }}>
-          Signin to save movies to your favorites.
-        </p>
+        <p style={{ color: 'white' }}>Signin to save movies to your favorites.</p>
       )}
     </div>
   );

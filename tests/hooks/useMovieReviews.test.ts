@@ -51,9 +51,7 @@ describe('useMovieReviews', () => {
 
   it('accepts string id', async () => {
     renderHook(() => useMovieReviews('550'));
-    await waitFor(() =>
-      expect(vi.mocked(tmdb.getMovieReviews)).toHaveBeenCalledWith('550')
-    );
+    await waitFor(() => expect(vi.mocked(tmdb.getMovieReviews)).toHaveBeenCalledWith('550'));
   });
 
   it('skips fetch when id is null', () => {

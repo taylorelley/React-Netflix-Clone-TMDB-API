@@ -11,9 +11,7 @@ interface RatingsProps {
  * @param props.movieRating Rating out of 5
  */
 export default function Ratings({ movieRating }: RatingsProps) {
-  const rating = Number.isFinite(movieRating)
-    ? Math.max(0, Math.min(5, movieRating))
-    : 0;
+  const rating = Number.isFinite(movieRating) ? Math.max(0, Math.min(5, movieRating)) : 0;
   const full = Math.floor(rating);
   const half = rating - full >= 0.5;
   const stars = [];
@@ -24,7 +22,7 @@ export default function Ratings({ movieRating }: RatingsProps) {
     stars.push(
       <span key={i} className={`${styles.star} ${styles[fill]}`} aria-hidden>
         ★
-      </span>
+      </span>,
     );
   }
   return <div className={styles.rating}>{stars}</div>;

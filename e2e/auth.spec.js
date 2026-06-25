@@ -22,7 +22,9 @@ test.describe('Auth flow', () => {
     await expect(page.getByText(/already logged in/i)).toBeVisible();
   });
 
-  test('signin form submit triggers request to /api/users/login (network mocked)', async ({ page }) => {
+  test('signin form submit triggers request to /api/users/login (network mocked)', async ({
+    page,
+  }) => {
     const requests = [];
     await page.route('**/api/users/login', async (route, request) => {
       requests.push(request.postDataJSON());

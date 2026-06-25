@@ -13,7 +13,7 @@ export async function mockTmdbApi(page, mocks) {
       route.fulfill({
         contentType: 'application/json',
         body: JSON.stringify(body),
-      })
+      }),
     );
   }
 }

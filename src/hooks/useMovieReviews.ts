@@ -13,9 +13,7 @@ export interface UseMovieReviewsResult {
  * Fetches reviews for a movie.
  * @param id TMDB movie id
  */
-export function useMovieReviews(
-  id: number | string | null,
-): UseMovieReviewsResult {
+export function useMovieReviews(id: number | string | null): UseMovieReviewsResult {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [totalReviews, setTotalReviews] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);

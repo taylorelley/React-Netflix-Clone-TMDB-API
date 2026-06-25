@@ -26,14 +26,7 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'json', 'html'],
       include: ['src/**/*.{ts,tsx,js,jsx}'],
-      exclude: [
-        'node_modules/',
-        'tests/',
-        'e2e/',
-        '**/*.css',
-        '**/*.svg',
-        'src/app/**',
-      ],
+      exclude: ['node_modules/', 'tests/', 'e2e/', '**/*.css', '**/*.svg', 'src/app/**'],
     },
   },
 });

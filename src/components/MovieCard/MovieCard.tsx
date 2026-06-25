@@ -29,13 +29,10 @@ export default function MovieCard({
   const rating = data ? Math.round(data.vote_average / 2) : 0;
   const router = useRouter();
 
-  const wrapperClass =
-    cardStyle === 'top-rated-card' ? styles.topRatedCard : styles.popularCard;
+  const wrapperClass = cardStyle === 'top-rated-card' ? styles.topRatedCard : styles.popularCard;
 
   const imageStyle: CSSProperties = {
-    backgroundImage: imageUrl
-      ? `url("https://image.tmdb.org/t/p/w500/${imageUrl}")`
-      : undefined,
+    backgroundImage: imageUrl ? `url("https://image.tmdb.org/t/p/w500/${imageUrl}")` : undefined,
     width: width,
     height: height,
     backgroundRepeat: 'no-repeat',
@@ -43,10 +40,7 @@ export default function MovieCard({
     backgroundPosition: 'center',
     position: 'relative',
     borderRadius: radius,
-    boxShadow:
-      cardStyle === 'popular-card'
-        ? '0px 0px 10px 0px rgba(118,118,118,0.75)'
-        : undefined,
+    boxShadow: cardStyle === 'popular-card' ? '0px 0px 10px 0px rgba(118,118,118,0.75)' : undefined,
   };
 
   const handleClick = (): void => {
@@ -56,11 +50,7 @@ export default function MovieCard({
   };
 
   return (
-    <div
-      className={wrapperClass}
-      onClick={handleClick}
-      data-testid="movie-card"
-    >
+    <div className={wrapperClass} onClick={handleClick} data-testid="movie-card">
       <div style={imageStyle}>
         <div className={styles.movieInfoTop}>
           <Ratings movieRating={rating} />

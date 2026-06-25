@@ -39,9 +39,7 @@ describe('useMovieDetails', () => {
 
   it('accepts string id', async () => {
     renderHook(() => useMovieDetails('550'));
-    await waitFor(() =>
-      expect(vi.mocked(tmdb.getMovieDetails)).toHaveBeenCalledWith('550')
-    );
+    await waitFor(() => expect(vi.mocked(tmdb.getMovieDetails)).toHaveBeenCalledWith('550'));
   });
 
   it('skips fetch when id is null', () => {
@@ -59,15 +57,14 @@ describe('useMovieDetails', () => {
   });
 
   it('refetches when id changes', async () => {
-    const { rerender } = renderHook(({ id }: { id: number | string | null }) => useMovieDetails(id), {
-      initialProps: { id: 1 as number | string | null },
-    });
-    await waitFor(() =>
-      expect(vi.mocked(tmdb.getMovieDetails)).toHaveBeenCalledWith(1)
+    const { rerender } = renderHook(
+      ({ id }: { id: number | string | null }) => useMovieDetails(id),
+      {
+        initialProps: { id: 1 as number | string | null },
+      },
     );
+    await waitFor(() => expect(vi.mocked(tmdb.getMovieDetails)).toHaveBeenCalledWith(1));
     rerender({ id: 2 });
-    await waitFor(() =>
-      expect(vi.mocked(tmdb.getMovieDetails)).toHaveBeenCalledWith(2)
-    );
+    await waitFor(() => expect(vi.mocked(tmdb.getMovieDetails)).toHaveBeenCalledWith(2));
   });
 });

@@ -27,9 +27,7 @@ export default function HomePage() {
     }
   };
 
-  const pageColorStyle: CSSProperties = darkMode
-    ? { color: 'white' }
-    : { color: 'black' };
+  const pageColorStyle: CSSProperties = darkMode ? { color: 'white' } : { color: 'black' };
 
   const containerClass = darkMode
     ? styles.homepageContainer

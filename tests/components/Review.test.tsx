@@ -22,7 +22,7 @@ const renderReview = (r: ReviewType = review) =>
   render(
     <ThemeContextProvider>
       <Review review={r} />
-    </ThemeContextProvider>
+    </ThemeContextProvider>,
   );
 
 describe('Review', () => {

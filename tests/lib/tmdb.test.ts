@@ -12,13 +12,49 @@ import {
 
 beforeEach(() => {
   getPopularMovies.mockResolvedValue([
-    { id: 1, title: 'Test Movie', vote_average: 7, poster_path: '/x.jpg', genre_ids: [28], overview: '', backdrop_path: null, release_date: '' },
-    { id: 2, title: 'Another Movie', vote_average: 8.5, poster_path: '/y.jpg', genre_ids: [35], overview: '', backdrop_path: null, release_date: '' },
+    {
+      id: 1,
+      title: 'Test Movie',
+      vote_average: 7,
+      poster_path: '/x.jpg',
+      genre_ids: [28],
+      overview: '',
+      backdrop_path: null,
+      release_date: '',
+    },
+    {
+      id: 2,
+      title: 'Another Movie',
+      vote_average: 8.5,
+      poster_path: '/y.jpg',
+      genre_ids: [35],
+      overview: '',
+      backdrop_path: null,
+      release_date: '',
+    },
   ]);
   getTopRatedMovies.mockResolvedValue([]);
   getUpcomingMovies.mockResolvedValue([
-    { id: 2026, title: 'Future Movie 1', overview: 'Overview text 1', backdrop_path: '/u1.jpg', genre_ids: [28], vote_average: 8, release_date: '2026-12-01', poster_path: null },
-    { id: 2027, title: 'Future Movie 2', overview: 'Overview text 2', backdrop_path: '/u2.jpg', genre_ids: [35], vote_average: 7.5, release_date: '2026-12-15', poster_path: null },
+    {
+      id: 2026,
+      title: 'Future Movie 1',
+      overview: 'Overview text 1',
+      backdrop_path: '/u1.jpg',
+      genre_ids: [28],
+      vote_average: 8,
+      release_date: '2026-12-01',
+      poster_path: null,
+    },
+    {
+      id: 2027,
+      title: 'Future Movie 2',
+      overview: 'Overview text 2',
+      backdrop_path: '/u2.jpg',
+      genre_ids: [35],
+      vote_average: 7.5,
+      release_date: '2026-12-15',
+      poster_path: null,
+    },
   ]);
   getMovieDetails.mockResolvedValue({
     id: 550,
@@ -27,7 +63,10 @@ beforeEach(() => {
     poster_path: '/z.jpg',
     backdrop_path: '/b.jpg',
     vote_average: 8.4,
-    genres: [{ id: 18, name: 'Drama' }, { id: 35, name: 'Comedy' }],
+    genres: [
+      { id: 18, name: 'Drama' },
+      { id: 35, name: 'Comedy' },
+    ],
     runtime: 139,
     budget: 63000000,
     tagline: 'Mischief. Mayhem. Soap.',
@@ -38,8 +77,18 @@ beforeEach(() => {
   getMovieTrailer.mockResolvedValue('dQw4w9WgXcQ');
   getMovieReviews.mockResolvedValue({
     results: [
-      { id: '1', author: 'John Doe', content: 'Great movie! Very entertaining.', author_details: { avatar_path: '/a1.jpg' } },
-      { id: '2', author: 'Jane Smith', content: 'I really enjoyed this film. Highly recommended!', author_details: { avatar_path: '/a2.jpg' } },
+      {
+        id: '1',
+        author: 'John Doe',
+        content: 'Great movie! Very entertaining.',
+        author_details: { avatar_path: '/a1.jpg' },
+      },
+      {
+        id: '2',
+        author: 'Jane Smith',
+        content: 'I really enjoyed this film. Highly recommended!',
+        author_details: { avatar_path: '/a2.jpg' },
+      },
     ],
     total_results: 2,
   });
@@ -51,7 +100,16 @@ beforeEach(() => {
     { id: 10749, name: 'Romance' },
   ]);
   searchMovies.mockResolvedValue([
-    { id: 1, title: 'Test Movie', vote_average: 7, poster_path: '/x.jpg', genre_ids: [28], overview: '', backdrop_path: null, release_date: '' },
+    {
+      id: 1,
+      title: 'Test Movie',
+      vote_average: 7,
+      poster_path: '/x.jpg',
+      genre_ids: [28],
+      overview: '',
+      backdrop_path: null,
+      release_date: '',
+    },
   ]);
 });
 
@@ -59,8 +117,26 @@ describe('TMDB API client functions (using test mocks)', () => {
   it('returns mocked popular movies', async () => {
     const result = await getPopularMovies();
     expect(result).toEqual([
-      { id: 1, title: 'Test Movie', vote_average: 7, poster_path: '/x.jpg', genre_ids: [28], overview: '', backdrop_path: null, release_date: '' },
-      { id: 2, title: 'Another Movie', vote_average: 8.5, poster_path: '/y.jpg', genre_ids: [35], overview: '', backdrop_path: null, release_date: '' },
+      {
+        id: 1,
+        title: 'Test Movie',
+        vote_average: 7,
+        poster_path: '/x.jpg',
+        genre_ids: [28],
+        overview: '',
+        backdrop_path: null,
+        release_date: '',
+      },
+      {
+        id: 2,
+        title: 'Another Movie',
+        vote_average: 8.5,
+        poster_path: '/y.jpg',
+        genre_ids: [35],
+        overview: '',
+        backdrop_path: null,
+        release_date: '',
+      },
     ]);
   });
 
@@ -99,6 +175,17 @@ describe('TMDB API client functions (using test mocks)', () => {
 
   it('returns mocked search results', async () => {
     const result = await searchMovies('action');
-    expect(result).toEqual([{ id: 1, title: 'Test Movie', vote_average: 7, poster_path: '/x.jpg', genre_ids: [28], overview: '', backdrop_path: null, release_date: '' }]);
+    expect(result).toEqual([
+      {
+        id: 1,
+        title: 'Test Movie',
+        vote_average: 7,
+        poster_path: '/x.jpg',
+        genre_ids: [28],
+        overview: '',
+        backdrop_path: null,
+        release_date: '',
+      },
+    ]);
   });
 });

@@ -29,10 +29,7 @@ async function fetchFromTmdb(path: string, search: string): Promise<unknown> {
   return res.json();
 }
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ path: string[] }> }
-) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   const { path } = await params;
   const search = req.nextUrl.searchParams.toString();
   try {
@@ -41,9 +38,6 @@ export async function GET(
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     const status = /TMDB responded (\d+)/.exec(message)?.[1];
-    return NextResponse.json(
-      { error: message },
-      { status: status ? Number(status) : 500 }
-    );
+    return NextResponse.json({ error: message }, { status: status ? Number(status) : 500 });
   }
 }

@@ -72,9 +72,7 @@ export default function Slider() {
       <MdKeyboardArrowRight onClick={handleRight} className={styles.rightArrow} />
       <div className={styles.sliderInfo}>
         <h1>{current?.title}</h1>
-        <p className={styles.sliderDescription}>
-          {current?.overview?.slice(0, 130)}..
-        </p>
+        <p className={styles.sliderDescription}>{current?.overview?.slice(0, 130)}..</p>
         <Genres moviesGenres={current?.genre_ids} />
         <p>Release Date: {formatDate(current?.release_date)}</p>
         <Ratings movieRating={current ? current.vote_average / 2 : 0} />

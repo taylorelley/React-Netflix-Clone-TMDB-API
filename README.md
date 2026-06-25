@@ -4,12 +4,12 @@ A Netflix-style movie browser built with **Next.js 16 (App Router)**, **React 19
 
 ## Test coverage
 
-| Metric | Coverage |
-|---|---|
+| Metric     | Coverage   |
+| ---------- | ---------- |
 | Statements | **99.01%** |
-| Branches | **86.16%** |
-| Functions | **100%** |
-| Lines | **99.01%** |
+| Branches   | **86.16%** |
+| Functions  | **100%**   |
+| Lines      | **99.01%** |
 
 `npm run test:coverage` (Vitest + v8) — 23 test files, 135 tests. All `src/hooks/*` and `src/lib/tmdb.ts` at 100%; remaining gap is `src/types/` (type-only files, no runtime).
 
@@ -51,12 +51,14 @@ E2E (Playwright, 15 tests) and the production build (`npx next build`) are also 
 
 ## Scripts
 
-| Script | Purpose |
-|---|---|
-| `npm run dev` | Start the Next.js dev server (Turbopack) |
-| `npm run build` | Production build (Turbopack) |
-| `npm start` | Run the production build |
+| Script                  | Purpose                                  |
+| ----------------------- | ---------------------------------------- |
+| `npm run dev`           | Start the Next.js dev server (Turbopack) |
+| `npm run build`         | Production build (Turbopack)             |
+| `npm start`             | Run the production build                 |
 | `npm run lint` | ESLint (Next.js + React + TS rules) |
+| `npm run format` | Prettier write all `*.{ts,tsx,js,jsx,json,css,md,yml}` |
+| `npm run format:check` | Prettier verify (used in CI) |
 | `npm run typecheck` | `tsc --noEmit` for app + test configs |
 | `npm run test:run` | Vitest unit tests (single run) |
 | `npm run test:coverage` | Vitest with v8 coverage report |
@@ -65,14 +67,14 @@ E2E (Playwright, 15 tests) and the production build (`npx next build`) are also 
 
 ## Routes
 
-| Path | Source |
-|---|---|
-| `/` | `src/app/page.tsx` → `src/views/HomePage/HomePage.tsx` |
-| `/moviedetails/[movieid]` | `src/app/moviedetails/[movieid]/page.tsx` |
-| `/signin` | `src/app/signin/page.tsx` |
-| `/signup` | `src/app/signup/page.tsx` |
-| `/myfavorites` | `src/app/myfavorites/page.tsx` |
-| `/api/tmdb/[...path]` | `src/app/api/tmdb/[...path]/route.ts` (TMDB proxy, `use cache`) |
+| Path                      | Source                                                          |
+| ------------------------- | --------------------------------------------------------------- |
+| `/`                       | `src/app/page.tsx` → `src/views/HomePage/HomePage.tsx`          |
+| `/moviedetails/[movieid]` | `src/app/moviedetails/[movieid]/page.tsx`                       |
+| `/signin`                 | `src/app/signin/page.tsx`                                       |
+| `/signup`                 | `src/app/signup/page.tsx`                                       |
+| `/myfavorites`            | `src/app/myfavorites/page.tsx`                                  |
+| `/api/tmdb/[...path]`     | `src/app/api/tmdb/[...path]/route.ts` (TMDB proxy, `use cache`) |
 
 ## Project layout
 

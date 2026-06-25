@@ -9,7 +9,10 @@ import type { Movie, Genre, Review } from '@/types/tmdb';
 
 const BASE_URL = '/api/tmdb';
 
-async function get<T>(path: string, params?: Record<string, string | number | undefined>): Promise<T> {
+async function get<T>(
+  path: string,
+  params?: Record<string, string | number | undefined>,
+): Promise<T> {
   const qs = new URLSearchParams();
   if (params) {
     for (const [k, v] of Object.entries(params)) {
@@ -28,15 +31,15 @@ async function get<T>(path: string, params?: Record<string, string | number | un
  * Fetches a paginated list of popular movies.
  */
 export function getPopularMovies(page = 1): Promise<Movie[]> {
-  return get('movie/popular', { page }).then(d => (d as { results: Movie[] }).results);
+  return get('movie/popular', { page }).then((d) => (d as { results: Movie[] }).results);
 }
 
 /**
  * Fetches top-rated movies (first page, first 10 results).
  */
 export function getTopRatedMovies(): Promise<Movie[]> {
-  return get('movie/top_rated', { page: 1 }).then(
-    d => ((d as { results?: Movie[] }).results || []).slice(0, 10)
+  return get('movie/top_rated', { page: 1 }).then((d) =>
+    ((d as { results?: Movie[] }).results || []).slice(0, 10),
   );
 }
 
@@ -44,7 +47,7 @@ export function getTopRatedMovies(): Promise<Movie[]> {
  * Fetches upcoming movies.
  */
 export function getUpcomingMovies(): Promise<Movie[]> {
-  return get('movie/upcoming').then(d => (d as { results: Movie[] }).results);
+  return get('movie/upcoming').then((d) => (d as { results: Movie[] }).results);
 }
 
 /**
@@ -58,9 +61,9 @@ export function getMovieDetails(id: string | number): Promise<Movie> {
  * Fetches YouTube trailer key for a movie.
  */
 export function getMovieTrailer(id: string | number): Promise<string | null> {
-  return get(`movie/${id}/videos`, { language: 'en-US' }).then(d => {
+  return get(`movie/${id}/videos`, { language: 'en-US' }).then((d) => {
     const results = (d as { results: { key: string; site: string; type: string }[] }).results;
-    return results.find(v => v.site === 'YouTube' && v.type === 'Trailer')?.key ?? null;
+    return results.find((v) => v.site === 'YouTube' && v.type === 'Trailer')?.key ?? null;
   });
 }
 
@@ -68,7 +71,7 @@ export function getMovieTrailer(id: string | number): Promise<string | null> {
  * Fetches reviews for a movie.
  */
 export function getMovieReviews(
-  id: string | number
+  id: string | number,
 ): Promise<{ results: Review[]; total_results: number }> {
   return get<{ results: Review[]; total_results: number }>(`movie/${id}/reviews`);
 }
@@ -77,12 +80,12 @@ export function getMovieReviews(
  * Fetches the full genre list.
  */
 export function getGenres(): Promise<Genre[]> {
-  return get('genre/movie/list').then(d => (d as { genres: Genre[] }).genres);
+  return get('genre/movie/list').then((d) => (d as { genres: Genre[] }).genres);
 }
 
 /**
  * Searches movies by query string.
  */
 export function searchMovies(query: string): Promise<Movie[]> {
-  return get('search/movie', { query }).then(d => (d as { results: Movie[] }).results);
+  return get('search/movie', { query }).then((d) => (d as { results: Movie[] }).results);
 }

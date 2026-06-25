@@ -22,7 +22,7 @@ const renderHeader = () =>
       <UserContextProvider>
         <Header />
       </UserContextProvider>
-    </ThemeContextProvider>
+    </ThemeContextProvider>,
   );
 
 beforeEach(() => {

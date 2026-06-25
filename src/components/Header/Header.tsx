@@ -53,10 +53,7 @@ export default function Header() {
         <div className={styles.themeButtons}>
           {darkMode ? (
             <>
-              <MdOutlineLightMode
-                onClick={handleTheme}
-                className={styles.themeIcon}
-              />
+              <MdOutlineLightMode onClick={handleTheme} className={styles.themeIcon} />
               <MdOutlineDarkMode className={`${styles.themeIcon} ${styles.themeIconActive}`} />
             </>
           ) : (

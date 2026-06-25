@@ -11,9 +11,7 @@ export interface UseMovieTrailerResult {
  * Fetches YouTube trailer key for a movie.
  * @param id TMDB movie id
  */
-export function useMovieTrailer(
-  id: number | string | null,
-): UseMovieTrailerResult {
+export function useMovieTrailer(id: number | string | null): UseMovieTrailerResult {
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);

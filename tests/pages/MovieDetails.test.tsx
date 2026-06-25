@@ -30,7 +30,11 @@ const mockReviews: Review[] = [
   { id: '4', author: 'D', content: 'r4', author_details: { avatar_path: null } },
 ];
 
-const { useMovieDetails: useMovieDetailsMock, useMovieTrailer: useMovieTrailerMock, useMovieReviews: useMovieReviewsMock } = vi.hoisted(() => ({
+const {
+  useMovieDetails: useMovieDetailsMock,
+  useMovieTrailer: useMovieTrailerMock,
+  useMovieReviews: useMovieReviewsMock,
+} = vi.hoisted(() => ({
   useMovieDetails: vi.fn(),
   useMovieTrailer: vi.fn(),
   useMovieReviews: vi.fn(),
@@ -51,14 +55,19 @@ const renderDetails = () =>
   render(
     <ThemeContextProvider>
       <MovieDetails />
-    </ThemeContextProvider>
+    </ThemeContextProvider>,
   );
 
 beforeEach(() => {
   localStorage.clear();
   useMovieDetailsMock.mockReturnValue({ movie: mockMovie, loading: false, error: null });
   useMovieTrailerMock.mockReturnValue({ trailerKey: 'abc123', loading: false, error: null });
-  useMovieReviewsMock.mockReturnValue({ reviews: mockReviews, totalReviews: 4, loading: false, error: null });
+  useMovieReviewsMock.mockReturnValue({
+    reviews: mockReviews,
+    totalReviews: 4,
+    loading: false,
+    error: null,
+  });
 });
 
 describe('MovieDetails', () => {

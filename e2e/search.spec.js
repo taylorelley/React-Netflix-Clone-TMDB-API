@@ -8,8 +8,20 @@ const genres = { genres: [] };
 
 const searchResponse = {
   results: [
-    { id: 1, title: 'Inception Result', backdrop_path: '/search1.jpg', vote_average: 8.4, genre_ids: [28] },
-    { id: 2, title: 'Inception 2', backdrop_path: '/search2.jpg', vote_average: 7.5, genre_ids: [12] },
+    {
+      id: 1,
+      title: 'Inception Result',
+      backdrop_path: '/search1.jpg',
+      vote_average: 8.4,
+      genre_ids: [28],
+    },
+    {
+      id: 2,
+      title: 'Inception 2',
+      backdrop_path: '/search2.jpg',
+      vote_average: 7.5,
+      genre_ids: [12],
+    },
   ],
   total_results: 2,
 };

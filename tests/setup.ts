@@ -52,8 +52,8 @@ vi.mock('react-player', () => {
     React.createElement(
       'div',
       { 'data-testid': 'react-player', 'data-url': url, 'data-controls': String(!!controls) },
-      'react-player'
-    )
+      'react-player',
+    ),
   );
   return { default: ReactPlayer };
 });

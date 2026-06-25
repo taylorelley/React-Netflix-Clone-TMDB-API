@@ -20,11 +20,7 @@ function readStored(): boolean | null {
 /**
  * Provides dark/light mode state, persisted to localStorage.
  */
-export default function ThemeContextProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function ThemeContextProvider({ children }: { children: ReactNode }) {
   const [darkMode, setDarkMode] = useState<boolean>(true);
 
   useEffect(() => {
@@ -33,8 +29,6 @@ export default function ThemeContextProvider({
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ darkMode, setDarkMode }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={{ darkMode, setDarkMode }}>{children}</ThemeContext.Provider>
   );
 }

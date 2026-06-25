@@ -26,7 +26,7 @@ const renderSignUp = () =>
   render(
     <ThemeContextProvider>
       <SignUp />
-    </ThemeContextProvider>
+    </ThemeContextProvider>,
   );
 
 describe('SignUp', () => {
@@ -51,7 +51,11 @@ describe('SignUp', () => {
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
     expect(url).toBe('/api/users/signup');
-    expect(JSON.parse(init.body as string)).toEqual({ email: 'a@b.c', password: 'pw', username: 'alice' });
+    expect(JSON.parse(init.body as string)).toEqual({
+      email: 'a@b.c',
+      password: 'pw',
+      username: 'alice',
+    });
   });
 
   it('setUsername state works (no setUserName bug)', () => {
@@ -103,12 +107,14 @@ describe('SignUp', () => {
       json: () => Promise.resolve({ status: 409 }),
     });
     renderSignUp();
-    fireEvent.change(screen.getByPlaceholderText('Enter Email'), { target: { value: 'taken@b.c' } });
+    fireEvent.change(screen.getByPlaceholderText('Enter Email'), {
+      target: { value: 'taken@b.c' },
+    });
     fireEvent.change(screen.getByPlaceholderText('Enter Password'), { target: { value: 'pw' } });
     fireEvent.change(screen.getByPlaceholderText('Enter Username'), { target: { value: 'bob' } });
     fireEvent.click(screen.getByRole('button', { name: /Sign Up/i }));
     await waitFor(() =>
-      expect(screen.getByText(/There is another user with that email/)).toBeInTheDocument()
+      expect(screen.getByText(/There is another user with that email/)).toBeInTheDocument(),
     );
   });
 

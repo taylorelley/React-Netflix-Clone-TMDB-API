@@ -4,7 +4,13 @@ import { mockTmdbApi } from './mocks/setup';
 const popularResponse = {
   page: 1,
   results: [
-    { id: 1, title: 'Inception', vote_average: 8.4, poster_path: '/inception.jpg', genre_ids: [28] },
+    {
+      id: 1,
+      title: 'Inception',
+      vote_average: 8.4,
+      poster_path: '/inception.jpg',
+      genre_ids: [28],
+    },
     { id: 2, title: 'The Matrix', vote_average: 8.7, poster_path: '/matrix.jpg', genre_ids: [28] },
   ],
   total_pages: 10,
@@ -23,7 +29,15 @@ const topRatedResponse = {
 const upcomingResponse = {
   page: 1,
   results: [
-    { id: 1001, title: 'Upcoming 1', overview: 'Upcoming 1 overview.', backdrop_path: '/up1.jpg', genre_ids: [28], vote_average: 7, release_date: '2026-12-01' },
+    {
+      id: 1001,
+      title: 'Upcoming 1',
+      overview: 'Upcoming 1 overview.',
+      backdrop_path: '/up1.jpg',
+      genre_ids: [28],
+      vote_average: 7,
+      release_date: '2026-12-01',
+    },
   ],
   total_pages: 1,
   total_results: 1,

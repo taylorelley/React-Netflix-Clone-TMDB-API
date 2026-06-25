@@ -64,10 +64,9 @@ describe('useSearch', () => {
   });
 
   it('clears results when query becomes empty', async () => {
-    const { result, rerender } = renderHook(
-      ({ q }: { q: string }) => useSearch(q, 0),
-      { initialProps: { q: 'matrix' } }
-    );
+    const { result, rerender } = renderHook(({ q }: { q: string }) => useSearch(q, 0), {
+      initialProps: { q: 'matrix' },
+    });
     await waitFor(() => expect(result.current.results).toHaveLength(1));
     rerender({ q: '' });
     expect(result.current.results).toEqual([]);
@@ -75,10 +74,9 @@ describe('useSearch', () => {
   });
 
   it('cancels pending call when query changes (latest query wins)', async () => {
-    const { rerender } = renderHook(
-      ({ q }: { q: string }) => useSearch(q, 50),
-      { initialProps: { q: 'matrix' } }
-    );
+    const { rerender } = renderHook(({ q }: { q: string }) => useSearch(q, 50), {
+      initialProps: { q: 'matrix' },
+    });
     await new Promise((r) => setTimeout(r, 20));
     rerender({ q: 'other' });
     await new Promise((r) => setTimeout(r, 60));

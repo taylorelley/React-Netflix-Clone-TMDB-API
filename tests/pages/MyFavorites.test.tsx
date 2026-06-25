@@ -27,13 +27,16 @@ afterEach(() => {
   delete (global as { fetch?: unknown }).fetch;
 });
 
-const renderFav = ({ token = '', user = null }: { token?: string; user?: { _id: string } | null } = {}) => {
+const renderFav = ({
+  token = '',
+  user = null,
+}: { token?: string; user?: { _id: string } | null } = {}) => {
   if (token) localStorage.setItem('token', token);
   if (user) localStorage.setItem('userInfo', JSON.stringify(user));
   return render(
     <UserContextProvider>
       <MyFavorites />
-    </UserContextProvider>
+    </UserContextProvider>,
   );
 };
 

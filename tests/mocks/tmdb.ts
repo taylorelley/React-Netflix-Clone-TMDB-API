@@ -4,23 +4,53 @@ import type { Movie, Genre, Review } from '@/types/tmdb';
 // Mock implementation of TMDB API client for testing
 // This file mocks all TMDB API calls used in hooks and components
 
-export const getPopularMovies: Mock<() => Promise<Movie[]>> = vi
-  .fn()
-  .mockResolvedValue([
-    { id: 1, title: 'Test Movie', vote_average: 7, poster_path: '/x.jpg', genre_ids: [28], overview: '', backdrop_path: null, release_date: '' },
-    { id: 2, title: 'Another Movie', vote_average: 8.5, poster_path: '/y.jpg', genre_ids: [35], overview: '', backdrop_path: null, release_date: '' },
-  ]);
+export const getPopularMovies: Mock<() => Promise<Movie[]>> = vi.fn().mockResolvedValue([
+  {
+    id: 1,
+    title: 'Test Movie',
+    vote_average: 7,
+    poster_path: '/x.jpg',
+    genre_ids: [28],
+    overview: '',
+    backdrop_path: null,
+    release_date: '',
+  },
+  {
+    id: 2,
+    title: 'Another Movie',
+    vote_average: 8.5,
+    poster_path: '/y.jpg',
+    genre_ids: [35],
+    overview: '',
+    backdrop_path: null,
+    release_date: '',
+  },
+]);
 
-export const getTopRatedMovies: Mock<() => Promise<Movie[]>> = vi
-  .fn()
-  .mockResolvedValue([]);
+export const getTopRatedMovies: Mock<() => Promise<Movie[]>> = vi.fn().mockResolvedValue([]);
 
-export const getUpcomingMovies: Mock<() => Promise<Movie[]>> = vi
-  .fn()
-  .mockResolvedValue([
-    { id: 2026, title: 'Future Movie 1', overview: 'Overview text 1', backdrop_path: '/u1.jpg', genre_ids: [28], vote_average: 8, release_date: '2026-12-01', poster_path: null },
-    { id: 2027, title: 'Future Movie 2', overview: 'Overview text 2', backdrop_path: '/u2.jpg', genre_ids: [35], vote_average: 7.5, release_date: '2026-12-15', poster_path: null },
-  ]);
+export const getUpcomingMovies: Mock<() => Promise<Movie[]>> = vi.fn().mockResolvedValue([
+  {
+    id: 2026,
+    title: 'Future Movie 1',
+    overview: 'Overview text 1',
+    backdrop_path: '/u1.jpg',
+    genre_ids: [28],
+    vote_average: 8,
+    release_date: '2026-12-01',
+    poster_path: null,
+  },
+  {
+    id: 2027,
+    title: 'Future Movie 2',
+    overview: 'Overview text 2',
+    backdrop_path: '/u2.jpg',
+    genre_ids: [35],
+    vote_average: 7.5,
+    release_date: '2026-12-15',
+    poster_path: null,
+  },
+]);
 
 export const getMovieDetails: Mock<(id: string | number) => Promise<Movie>> = vi
   .fn()
@@ -31,7 +61,10 @@ export const getMovieDetails: Mock<(id: string | number) => Promise<Movie>> = vi
     poster_path: '/z.jpg',
     backdrop_path: '/b.jpg',
     vote_average: 8.4,
-    genres: [{ id: 18, name: 'Drama' }, { id: 35, name: 'Comedy' }],
+    genres: [
+      { id: 18, name: 'Drama' },
+      { id: 35, name: 'Comedy' },
+    ],
     runtime: 139,
     budget: 63000000,
     tagline: 'Mischief. Mayhem. Soap.',
@@ -64,18 +97,23 @@ export const getMovieReviews: Mock<
   total_results: 2,
 });
 
-export const getGenres: Mock<() => Promise<Genre[]>> = vi
-  .fn()
-  .mockResolvedValue([
-    { id: 28, name: 'Action' },
-    { id: 35, name: 'Comedy' },
-    { id: 18, name: 'Drama' },
-    { id: 27, name: 'Horror' },
-    { id: 10749, name: 'Romance' },
-  ]);
+export const getGenres: Mock<() => Promise<Genre[]>> = vi.fn().mockResolvedValue([
+  { id: 28, name: 'Action' },
+  { id: 35, name: 'Comedy' },
+  { id: 18, name: 'Drama' },
+  { id: 27, name: 'Horror' },
+  { id: 10749, name: 'Romance' },
+]);
 
-export const searchMovies: Mock<(query: string) => Promise<Movie[]>> = vi
-  .fn()
-  .mockResolvedValue([
-    { id: 1, title: 'Test Movie', vote_average: 7, poster_path: '/x.jpg', genre_ids: [28], overview: '', backdrop_path: null, release_date: '' },
-  ]);
+export const searchMovies: Mock<(query: string) => Promise<Movie[]>> = vi.fn().mockResolvedValue([
+  {
+    id: 1,
+    title: 'Test Movie',
+    vote_average: 7,
+    poster_path: '/x.jpg',
+    genre_ids: [28],
+    overview: '',
+    backdrop_path: null,
+    release_date: '',
+  },
+]);

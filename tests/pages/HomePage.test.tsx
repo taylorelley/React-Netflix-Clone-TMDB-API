@@ -9,8 +9,26 @@ import type { Movie } from '@/types/tmdb';
 vi.mock('@/hooks/usePopularMovies', () => ({
   usePopularMovies: vi.fn().mockReturnValue({
     movies: [
-      { id: 1, title: 'Popular 1', vote_average: 7, poster_path: '/p1.jpg', genre_ids: [28], overview: '', backdrop_path: null, release_date: '' },
-      { id: 2, title: 'Popular 2', vote_average: 8, poster_path: '/p2.jpg', genre_ids: [35], overview: '', backdrop_path: null, release_date: '' },
+      {
+        id: 1,
+        title: 'Popular 1',
+        vote_average: 7,
+        poster_path: '/p1.jpg',
+        genre_ids: [28],
+        overview: '',
+        backdrop_path: null,
+        release_date: '',
+      },
+      {
+        id: 2,
+        title: 'Popular 2',
+        vote_average: 8,
+        poster_path: '/p2.jpg',
+        genre_ids: [35],
+        overview: '',
+        backdrop_path: null,
+        release_date: '',
+      },
     ] as Movie[],
     loading: false,
     error: null,
@@ -19,7 +37,16 @@ vi.mock('@/hooks/usePopularMovies', () => ({
 vi.mock('@/hooks/useTopRatedMovies', () => ({
   useTopRatedMovies: vi.fn().mockReturnValue({
     movies: [
-      { id: 100, title: 'Top 1', vote_average: 9, backdrop_path: '/t1.jpg', genre_ids: [18], overview: '', poster_path: null, release_date: '' },
+      {
+        id: 100,
+        title: 'Top 1',
+        vote_average: 9,
+        backdrop_path: '/t1.jpg',
+        genre_ids: [18],
+        overview: '',
+        poster_path: null,
+        release_date: '',
+      },
     ] as Movie[],
     loading: false,
     error: null,
@@ -30,7 +57,7 @@ const renderHome = () =>
   render(
     <ThemeContextProvider>
       <HomePage />
-    </ThemeContextProvider>
+    </ThemeContextProvider>,
   );
 
 describe('HomePage', () => {

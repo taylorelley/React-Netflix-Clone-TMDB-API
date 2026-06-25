@@ -20,8 +20,18 @@ const detail550 = {
 const videos550 = { results: [{ key: 'abc', site: 'YouTube', type: 'Trailer' }] };
 const reviews550 = {
   results: [
-    { id: '1', author: 'Alice', content: 'A great movie with a stunning twist.', author_details: { avatar_path: '/av1.jpg' } },
-    { id: '2', author: 'Bob', content: 'Brilliantly crafted narrative.', author_details: { avatar_path: '/av2.jpg' } },
+    {
+      id: '1',
+      author: 'Alice',
+      content: 'A great movie with a stunning twist.',
+      author_details: { avatar_path: '/av1.jpg' },
+    },
+    {
+      id: '2',
+      author: 'Bob',
+      content: 'Brilliantly crafted narrative.',
+      author_details: { avatar_path: '/av2.jpg' },
+    },
   ],
   total_results: 2,
 };

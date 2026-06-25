@@ -51,29 +51,21 @@ describe('usePopularMovies', () => {
 
   it('passes page argument to getPopularMovies', async () => {
     renderHook(() => usePopularMovies(3));
-    await waitFor(() =>
-      expect(vi.mocked(tmdb.getPopularMovies)).toHaveBeenCalledWith(3)
-    );
+    await waitFor(() => expect(vi.mocked(tmdb.getPopularMovies)).toHaveBeenCalledWith(3));
   });
 
   it('defaults page to 1 when no argument given', async () => {
     renderHook(() => usePopularMovies());
-    await waitFor(() =>
-      expect(vi.mocked(tmdb.getPopularMovies)).toHaveBeenCalledWith(1)
-    );
+    await waitFor(() => expect(vi.mocked(tmdb.getPopularMovies)).toHaveBeenCalledWith(1));
   });
 
   it('refetches when page changes', async () => {
     const { rerender } = renderHook(({ p }: { p: number }) => usePopularMovies(p), {
       initialProps: { p: 1 },
     });
-    await waitFor(() =>
-      expect(vi.mocked(tmdb.getPopularMovies)).toHaveBeenCalledWith(1)
-    );
+    await waitFor(() => expect(vi.mocked(tmdb.getPopularMovies)).toHaveBeenCalledWith(1));
     rerender({ p: 2 });
-    await waitFor(() =>
-      expect(vi.mocked(tmdb.getPopularMovies)).toHaveBeenCalledWith(2)
-    );
+    await waitFor(() => expect(vi.mocked(tmdb.getPopularMovies)).toHaveBeenCalledWith(2));
   });
 
   it('captures error when fetch rejects', async () => {

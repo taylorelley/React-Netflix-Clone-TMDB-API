@@ -36,7 +36,7 @@ describe('lib/tmdb.ts — fetch call paths', () => {
     });
     const result = await getPopularMovies(2);
     expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringMatching(/\/api\/tmdb\/movie\/popular\?.*page=2/)
+      expect.stringMatching(/\/api\/tmdb\/movie\/popular\?.*page=2/),
     );
     expect(result).toEqual([{ id: 1 }]);
   });
@@ -44,7 +44,7 @@ describe('lib/tmdb.ts — fetch call paths', () => {
   it('getPopularMovies defaults page to 1', async () => {
     await getPopularMovies();
     expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringMatching(/\/api\/tmdb\/movie\/popular\?.*page=1/)
+      expect.stringMatching(/\/api\/tmdb\/movie\/popular\?.*page=1/),
     );
   });
 
@@ -52,13 +52,10 @@ describe('lib/tmdb.ts — fetch call paths', () => {
     fetchMock.mockResolvedValueOnce({
       ok: true,
       status: 200,
-      json: () =>
-        Promise.resolve({ results: Array.from({ length: 20 }, (_, i) => ({ id: i })) }),
+      json: () => Promise.resolve({ results: Array.from({ length: 20 }, (_, i) => ({ id: i })) }),
     });
     const result = await getTopRatedMovies();
-    expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringMatching(/\/api\/tmdb\/movie\/top_rated/)
-    );
+    expect(fetchMock).toHaveBeenCalledWith(expect.stringMatching(/\/api\/tmdb\/movie\/top_rated/));
     expect(result).toHaveLength(10);
   });
 
@@ -79,9 +76,7 @@ describe('lib/tmdb.ts — fetch call paths', () => {
       json: () => Promise.resolve({ results: [{ id: 99 }] }),
     });
     const result = await getUpcomingMovies();
-    expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringMatching(/\/api\/tmdb\/movie\/upcoming/)
-    );
+    expect(fetchMock).toHaveBeenCalledWith(expect.stringMatching(/\/api\/tmdb\/movie\/upcoming/));
     expect(result).toEqual([{ id: 99 }]);
   });
 
@@ -92,9 +87,7 @@ describe('lib/tmdb.ts — fetch call paths', () => {
       json: () => Promise.resolve({ id: 550 }),
     });
     const result = await getMovieDetails(550);
-    expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringMatching(/\/api\/tmdb\/movie\/550/)
-    );
+    expect(fetchMock).toHaveBeenCalledWith(expect.stringMatching(/\/api\/tmdb\/movie\/550/));
     expect(result.id).toBe(550);
   });
 
@@ -113,7 +106,7 @@ describe('lib/tmdb.ts — fetch call paths', () => {
     });
     const result = await getMovieTrailer(550);
     expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringMatching(/\/api\/tmdb\/movie\/550\/videos\?.*language=en-US/)
+      expect.stringMatching(/\/api\/tmdb\/movie\/550\/videos\?.*language=en-US/),
     );
     expect(result).toBe('real');
   });
@@ -142,7 +135,7 @@ describe('lib/tmdb.ts — fetch call paths', () => {
     });
     const result = await getMovieReviews(550);
     expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringMatching(/\/api\/tmdb\/movie\/550\/reviews/)
+      expect.stringMatching(/\/api\/tmdb\/movie\/550\/reviews/),
     );
     expect(result.total_results).toBe(1);
   });
@@ -155,7 +148,7 @@ describe('lib/tmdb.ts — fetch call paths', () => {
     });
     const result = await getGenres();
     expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringMatching(/\/api\/tmdb\/genre\/movie\/list/)
+      expect.stringMatching(/\/api\/tmdb\/genre\/movie\/list/),
     );
     expect(result).toEqual([{ id: 28, name: 'Action' }]);
   });
@@ -168,7 +161,7 @@ describe('lib/tmdb.ts — fetch call paths', () => {
     });
     const result = await searchMovies('matrix');
     expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringMatching(/\/api\/tmdb\/search\/movie\?.*query=matrix/)
+      expect.stringMatching(/\/api\/tmdb\/search\/movie\?.*query=matrix/),
     );
     expect(result).toEqual([{ id: 7 }]);
   });

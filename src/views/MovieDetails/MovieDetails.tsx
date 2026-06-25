@@ -104,10 +104,7 @@ export default function MovieDetails() {
               <em>End of reviews.Collapse</em>
             </p>
           ) : (
-            <p
-              className={styles.reviewNumber}
-              onClick={() => setReviewNumber(reviewNumber + 3)}
-            >
+            <p className={styles.reviewNumber} onClick={() => setReviewNumber(reviewNumber + 3)}>
               <em>Read more reviews</em>
             </p>
           )}

@@ -23,14 +23,7 @@ const movie: Movie = {
 };
 
 const renderCard = (props: Partial<React.ComponentProps<typeof MovieCard>> = {}) =>
-  render(
-    <MovieCard
-      data={movie}
-      imageUrl="/inc.jpg"
-      cardStyle="popular-card"
-      {...props}
-    />
-  );
+  render(<MovieCard data={movie} imageUrl="/inc.jpg" cardStyle="popular-card" {...props} />);
 
 describe('MovieCard', () => {
   it('renders movie title', () => {

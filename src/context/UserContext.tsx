@@ -27,11 +27,7 @@ function readToken(): string {
 /**
  * Provides user auth state, persisted to localStorage.
  */
-export default function UserContextProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function UserContextProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | ''>('');
   const [token, setToken] = useState<string>('');
 

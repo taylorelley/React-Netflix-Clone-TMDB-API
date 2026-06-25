@@ -25,9 +25,7 @@ export default function Review({ review }: ReviewProps) {
       ? (avatar as unknown as string)
       : `https://image.tmdb.org/t/p/w500/${review.author_details.avatar_path}`;
 
-  const contentClass = darkMode
-    ? styles.content
-    : `${styles.content} ${styles.contentLight}`;
+  const contentClass = darkMode ? styles.content : `${styles.content} ${styles.contentLight}`;
 
   return (
     <div key={review.id} className={styles.review}>

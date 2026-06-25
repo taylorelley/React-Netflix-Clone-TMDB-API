@@ -12,9 +12,7 @@ export interface UseMovieDetailsResult {
  * Fetches full movie details by ID.
  * @param id TMDB movie id
  */
-export function useMovieDetails(
-  id: number | string | null,
-): UseMovieDetailsResult {
+export function useMovieDetails(id: number | string | null): UseMovieDetailsResult {
   const [movie, setMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);

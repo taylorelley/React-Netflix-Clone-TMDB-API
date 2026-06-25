@@ -31,7 +31,7 @@ const renderSignIn = () =>
       <UserContextProvider>
         <SignIn />
       </UserContextProvider>
-    </ThemeContextProvider>
+    </ThemeContextProvider>,
   );
 
 describe('SignIn', () => {
@@ -77,7 +77,7 @@ describe('SignIn', () => {
         <UserContextProvider>
           <SignIn />
         </UserContextProvider>
-      </ThemeContextProvider>
+      </ThemeContextProvider>,
     );
     expect(screen.getByText(/already logged in/i)).toBeInTheDocument();
   });
