@@ -13,7 +13,7 @@ import Ratings from '../Ratings/Ratings';
  * @param {string} [props.radius]
  */
 export default function MovieCard({ data, imageUrl, width, height, cardStyle, radius }) {
-  const rating = Math.round(data?.vote_average / 2);
+  const rating = data ? Math.round(data.vote_average / 2) : 0;
   const navigate = useNavigate();
 
   const imageStyle = {

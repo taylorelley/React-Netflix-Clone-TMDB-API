@@ -48,7 +48,7 @@ function MovieDetails() {
                 <div className="title-container">
                     <h1>{movie?.title}</h1>
                 </div>
-                <Ratings movieRating={movie?.vote_average / 2} />
+                <Ratings movieRating={movie ? movie.vote_average / 2 : 0} />
                 <div className="info-container">
                     <img src={`https://image.tmdb.org/t/p/w500/${movie?.poster_path}`} className="details-poster" />
                     <div className="movie-info">
@@ -57,7 +57,7 @@ function MovieDetails() {
                         <h4>Status: <span>{movie?.status}</span></h4>
                         <h4>Runtime: <span>{movie?.runtime} min.</span></h4>
                         <h4>Budget: <span>{movie?.budget}</span></h4>
-                        <Genres movieGenres={movie?.genres} />
+                        <Genres moviesGenres={movie?.genres?.map(g => g.id)} />
                     </div>
                 </div>
                 <div className="review-container">

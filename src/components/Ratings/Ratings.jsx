@@ -6,11 +6,12 @@ import StarRatings from 'react-star-ratings';
  * @param {number} props.movieRating - Rating out of 5
  */
 function Ratings({ movieRating }) {
+  const rating = Number.isFinite(movieRating) ? movieRating : 0;
   return (
 
     <div className='rating'>
         <StarRatings
-          rating={movieRating}
+          rating={rating}
           numberOfStars={5}
           name='rating'
           starDimension='15px'
