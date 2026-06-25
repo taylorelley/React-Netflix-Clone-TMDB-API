@@ -27,7 +27,15 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       include: ['src/**/*.{ts,tsx,js,jsx}'],
-      exclude: ['node_modules/', 'tests/', 'e2e/', '**/*.css', '**/*.svg', 'src/app/**', 'src/types/**'],
+      exclude: [
+        'node_modules/',
+        'tests/',
+        'e2e/',
+        '**/*.css',
+        '**/*.svg',
+        'src/app/**',
+        'src/types/**',
+      ],
       thresholds: {
         lines: 80,
         functions: 80,
