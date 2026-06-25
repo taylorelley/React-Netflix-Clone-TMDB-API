@@ -1,0 +1,8 @@
+.favoritesContainer {
+  margin-top: var(--header-height);
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--white);
+}

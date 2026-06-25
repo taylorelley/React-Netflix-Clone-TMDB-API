@@ -1,0 +1,20 @@
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  font-size: 15px;
+  line-height: 1;
+}
+.star {
+  color: var(--grey);
+}
+.full {
+  color: var(--red);
+}
+.half {
+  background: linear-gradient(90deg, var(--red) 50%, var(--grey) 50%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
