@@ -62,7 +62,7 @@ function MovieDetails() {
                 </div>
                 <div className="review-container">
                     <p className="reviews-title">Reviews</p>
-                    {reviews.slice(0, reviewNumber).map(item => {
+                    {(reviews || []).slice(0, reviewNumber).map(item => {
                         return <Review key={item.id} review={item} />;
                     })}
                     {reviewNumber >= totalReviews
