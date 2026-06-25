@@ -30,7 +30,7 @@ export default function Header() {
   return (
     <div className={containerClass}>
       <Link className={styles.logo} href="/">
-        Cinetrail
+        Netflix
       </Link>
       <div className={styles.searchContainer}>
         <input

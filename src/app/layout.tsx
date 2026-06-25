@@ -6,7 +6,7 @@ import CombinedContextProvider from '@/context';
 import Header from '@/components/Header/Header';
 
 export const metadata: Metadata = {
-  title: 'Cinetrail',
+  title: 'Netflix',
   description: 'Browse popular, top-rated, and upcoming movies powered by TMDB.',
   icons: {
     icon: [{ url: '/icon.png', type: 'image/png' }],

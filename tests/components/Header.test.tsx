@@ -32,7 +32,7 @@ beforeEach(() => {
 describe('Header', () => {
   it('renders logo link', () => {
     renderHeader();
-    expect(screen.getByText('Cinetrail')).toBeInTheDocument();
+    expect(screen.getByText('Netflix')).toBeInTheDocument();
   });
 
   it('renders search input', () => {

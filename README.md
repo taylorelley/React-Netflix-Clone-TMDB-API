@@ -1,4 +1,4 @@
-# Cinetrail (React Netflix Clone, TMDB API)
+# Netflix Clone (TMDB API)
 
 A Netflix-style movie browser built with **Next.js 16 (App Router)**, **React 19**, and **TypeScript 5**, powered by the TMDB API. The TMDB API key is kept server-side via a Next.js Route Handler with `use cache`; the client never sees it.
 
