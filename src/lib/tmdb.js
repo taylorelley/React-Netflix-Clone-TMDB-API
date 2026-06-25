@@ -24,7 +24,7 @@ export const getPopularMovies = (page = 1) =>
  * @returns {Promise<Movie[]>}
  */
 export const getTopRatedMovies = () =>
-  client.get('/movie/top_rated', { params: { api_key: API_KEY, page: 1 } }).then(r => r.data.results.slice(0, 10));
+  client.get('/movie/top_rated', { params: { api_key: API_KEY, page: 1 } }).then(r => (r.data.results || []).slice(0, 10));
 
 /**
  * Fetches upcoming movies.

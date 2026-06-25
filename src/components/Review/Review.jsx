@@ -22,7 +22,7 @@ function Review({ review }) {
             </div>
 
             {!seeMore
-                ? <p className={darkMode ? 'content' : 'content content-light'}>{review.content.slice(0, 300)}...<span onClick={() => setSeeMore(true)} className="read-more"> read more</span></p>
+                ? <p className={darkMode ? 'content' : 'content content-light'}>{review.content?.slice(0, 300)}...<span onClick={() => setSeeMore(true)} className="read-more"> read more</span></p>
                 : <p className={darkMode ? 'content' : 'content content-light'}>{review.content}<span onClick={() => setSeeMore(false)} className="read-less"> read less</span></p>
             }
         </div>
