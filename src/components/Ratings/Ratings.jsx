@@ -1,7 +1,11 @@
-import React from 'react'
-import StarRatings from 'react-star-ratings'
+import StarRatings from 'react-star-ratings';
 
-function Ratings({movieRating}) {
+/**
+ * Star rating display component.
+ * @param {Object} props
+ * @param {number} props.movieRating - Rating out of 5
+ */
+function Ratings({ movieRating }) {
   return (
 
     <div className='rating'>

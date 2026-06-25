@@ -1,6 +1,9 @@
-import {useState, createContext, useEffect} from 'react'
-export const ThemeContext = createContext()
+import { useState, createContext, useEffect } from 'react';
+export const ThemeContext = createContext();
 
+/**
+ * Provides dark/light mode state, persisted to localStorage.
+ */
 export default function ThemeContextProvider(props) {
 const [darkMode, setDarkMode] = useState (true)
 

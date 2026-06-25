@@ -1,6 +1,9 @@
-import {useState,useEffect, createContext} from 'react'
-export const UserContext= createContext({})
+import { useState, useEffect, createContext } from 'react';
+export const UserContext = createContext({});
 
+/**
+ * Provides user auth state, persisted to localStorage.
+ */
 export default function UserContextProvider(props) {
     const [user, setUser]=useState('')
     const [token,setToken]=useState('')
