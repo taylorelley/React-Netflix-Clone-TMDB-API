@@ -9,7 +9,7 @@ import CustomCursor from '@/components/CustomCursor/CustomCursor';
 import SmoothScroll from '@/components/SmoothScroll/SmoothScroll';
 
 export const metadata: Metadata = {
-  title: 'CINEMA — Premium Movie Discovery',
+  title: 'Netflix — Premium Movie Discovery',
   description:
     'An immersive cinematic experience for discovering popular, top-rated, and upcoming movies powered by TMDB.',
   icons: {

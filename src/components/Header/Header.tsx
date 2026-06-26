@@ -57,7 +57,7 @@ export default function Header() {
   return (
     <div ref={headerRef} className={containerClass}>
       <Link className={styles.logo} href="/" data-cursor-hover>
-        <span className={styles.logoText}>CINEMA</span>
+        <span className={styles.logoText}>Netflix</span>
       </Link>
 
       <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ''}`}>
