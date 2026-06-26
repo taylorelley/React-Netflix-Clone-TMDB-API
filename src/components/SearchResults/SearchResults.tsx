@@ -12,9 +12,6 @@ interface SearchResultsProps {
   setQuery: (query: string) => void;
 }
 
-/**
- * Single search result item with click navigation.
- */
 export default function SearchResults({ movie, setQuery }: SearchResultsProps) {
   const router = useRouter();
   const [imageError, setImageError] = useState<boolean>(false);
@@ -30,7 +27,7 @@ export default function SearchResults({ movie, setQuery }: SearchResultsProps) {
       : `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
 
   return (
-    <div className={styles.searchResultsItem} onClick={handleNavigation}>
+    <div className={styles.searchResultsItem} onClick={handleNavigation} data-cursor-hover>
       <Image
         className={styles.resultImg}
         src={src}
@@ -40,7 +37,12 @@ export default function SearchResults({ movie, setQuery }: SearchResultsProps) {
         height={80}
         unoptimized
       />
-      <p>{movie.title}</p>
+      <div className={styles.resultInfo}>
+        <p className={styles.resultTitle}>{movie.title}</p>
+        {movie.release_date && (
+          <span className={styles.resultYear}>{movie.release_date.slice(0, 4)}</span>
+        )}
+      </div>
     </div>
   );
 }

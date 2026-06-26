@@ -32,9 +32,10 @@ describe('Genres', () => {
     expect(container.querySelector('div')).toBeTruthy();
   });
 
-  it('renders comma between multiple genres', () => {
+  it('renders multiple genre tags', () => {
     const { container } = render(<Genres moviesGenres={[28, 35]} />);
-    expect(container.textContent).toMatch(/,/);
+    const tags = container.querySelectorAll('[class*="genreTag"]');
+    expect(tags.length).toBe(2);
   });
 
   it('uses the hook from useGenres', () => {

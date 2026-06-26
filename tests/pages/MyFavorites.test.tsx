@@ -43,7 +43,7 @@ const renderFav = ({
 describe('MyFavorites', () => {
   it('shows signin prompt when no token', () => {
     renderFav();
-    expect(screen.getByText(/Signin to save movies/)).toBeInTheDocument();
+    expect(screen.getByText(/Sign in to save your favorite movies/)).toBeInTheDocument();
   });
 
   it('fetches favorites when token + user present', async () => {

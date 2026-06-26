@@ -34,13 +34,13 @@ describe('Review', () => {
   it('shows full content when expanded', () => {
     renderReview();
     fireEvent.click(screen.getByText(/read more/));
-    expect(screen.getByText(/read less/)).toBeInTheDocument();
+    expect(screen.getByText(/show less/)).toBeInTheDocument();
   });
 
-  it('toggles back to truncated when read less clicked', () => {
+  it('toggles back to truncated when show less clicked', () => {
     renderReview();
     fireEvent.click(screen.getByText(/read more/));
-    fireEvent.click(screen.getByText(/read less/));
+    fireEvent.click(screen.getByText(/show less/));
     expect(screen.getByText(/read more/)).toBeInTheDocument();
   });
 
@@ -56,16 +56,16 @@ describe('Review', () => {
     expect(img!.getAttribute('src')).toContain('avatar.gif');
   });
 
-  it('renders with short content (no separate path)', () => {
+  it('renders with short content (no read more link)', () => {
     renderReview(shortReview);
-    expect(screen.getByText(/read more/)).toBeInTheDocument();
+    // Short content doesn't show read more
+    expect(screen.queryByText(/read more/)).not.toBeInTheDocument();
   });
 
-  it('uses content-light class when darkMode is false', async () => {
+  it('renders review content', async () => {
     localStorage.setItem('darkMode', JSON.stringify(false));
     const { container } = renderReview();
-    // Wait for the useEffect to read from localStorage
     await new Promise((r) => setTimeout(r, 10));
-    expect(container.querySelector('[class*="contentLight"]')).toBeTruthy();
+    expect(container.querySelector('[class*="content"]')).toBeTruthy();
   });
 });

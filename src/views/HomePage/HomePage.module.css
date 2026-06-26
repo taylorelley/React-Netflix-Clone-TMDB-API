@@ -1,80 +1,179 @@
 .homepageContainer {
-  margin-top: var(--header-height);
-  color: var(--white);
   min-height: 100vh;
-  padding-bottom: 20px;
+  padding-bottom: var(--space-3xl);
+  background: var(--bg-primary);
 }
+
 .homeLight {
-  background-color: var(--light-bg);
-  color: black;
+  background: var(--light-bg);
 }
+
+/* ── Section heading ── */
+.sectionHeading {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+  position: relative;
+  display: inline-block;
+}
+
+.sectionHeading::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 32px;
+  height: 2px;
+  background: var(--red);
+  border-radius: 1px;
+}
+
+/* ── Movies layout ── */
 .moviesWrapper {
-  margin-top: 20px;
   display: flex;
-  padding: 20px;
+  gap: var(--space-2xl);
+  padding: var(--space-2xl) clamp(20px, 5vw, 80px) 0;
 }
+
+/* ── Popular section ── */
 .popularContainer {
-  display: flex;
-  flex-direction: column;
-  padding: 0 15px;
+  flex: 1;
+  min-width: 0;
 }
-.popularCardsWrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  margin-top: 20px;
-  align-items: center;
+
+.popularGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: var(--space-lg);
 }
-.pageNumbers {
-  display: flex;
-  justify-content: space-around;
-  width: 60%;
-  cursor: pointer;
-  margin-top: 20px;
-  color: var(--white);
-  font-size: 1.5em;
-}
-.pageNumbers p:hover {
-  color: var(--red);
-}
-.currentPage {
-  border-bottom: 1px solid var(--white);
-  cursor: pointer;
-}
-.page {
-  cursor: pointer;
-}
+
+/* ── Top rated sidebar ── */
 .topRatedContainer {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.topRatedGrid {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 40%;
-  height: fit-content;
+  gap: var(--space-md);
 }
-.topRatedCardsWrapper {
+
+/* ── Pagination ── */
+.pagination {
   display: flex;
-  flex-wrap: wrap;
-  border-radius: 8px;
-  margin-top: 20px;
-  box-shadow: -11px 2px 33px 1px rgba(8, 7, 7, 0.75);
-  -webkit-box-shadow: -11px 2px 33px 1px rgba(8, 7, 7, 0.75);
-  -moz-box-shadow: -11px 2px 33px 1px rgba(8, 7, 7, 0.75);
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--space-2xl);
 }
-@media (max-width: 768px) {
+
+.pageBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+  cursor: pointer;
+}
+
+.pageBtn:hover {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+  background: var(--bg-glass-light);
+  transform: translateY(-2px);
+}
+
+.pageBtnActive {
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
+}
+
+.pageBtnActive:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--red-glow);
+}
+
+/* ── Skeleton loading ── */
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: var(--space-lg);
+}
+
+.skeletonCard {
+  aspect-ratio: 2 / 3;
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary) 25%,
+    var(--bg-elevated) 50%,
+    var(--bg-tertiary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
   .moviesWrapper {
     flex-direction: column;
-    align-items: center;
   }
+
   .topRatedContainer {
-    margin-top: 50px;
-    width: 80%;
-  }
-  .pageNumbers {
     width: 100%;
   }
+
+  .topRatedGrid {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }
-@media (max-width: 600px) {
-  .homepageContainer {
-    margin-top: var(--header-height-mobile);
+
+@media (max-width: 768px) {
+  .popularGrid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .moviesWrapper {
+    padding: var(--space-xl) var(--space-md) 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .popularGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .pageBtn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.8rem;
   }
 }

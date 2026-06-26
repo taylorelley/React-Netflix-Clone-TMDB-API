@@ -59,35 +59,35 @@ describe('Slider', () => {
 
   it('right arrow advances index', () => {
     renderSlider();
-    fireEvent.click(document.querySelector('[class*="rightArrow"]')!);
+    fireEvent.click(document.querySelector('[class*="arrowRight"]')!);
     expect(screen.getByText('Movie B')).toBeInTheDocument();
   });
 
   it('right arrow wraps from last to first', () => {
     renderSlider();
-    fireEvent.click(document.querySelector('[class*="rightArrow"]')!);
-    fireEvent.click(document.querySelector('[class*="rightArrow"]')!);
+    fireEvent.click(document.querySelector('[class*="arrowRight"]')!);
+    fireEvent.click(document.querySelector('[class*="arrowRight"]')!);
     expect(screen.getByText('Movie A')).toBeInTheDocument();
   });
 
   it('left arrow from first wraps to last', () => {
     renderSlider();
-    fireEvent.click(document.querySelector('[class*="leftArrow"]')!);
+    fireEvent.click(document.querySelector('[class*="arrowLeft"]')!);
     expect(screen.getByText('Movie B')).toBeInTheDocument();
   });
 
   it('left arrow decrements from middle', () => {
     renderSlider();
-    fireEvent.click(document.querySelector('[class*="rightArrow"]')!);
-    fireEvent.click(document.querySelector('[class*="leftArrow"]')!);
+    fireEvent.click(document.querySelector('[class*="arrowRight"]')!);
+    fireEvent.click(document.querySelector('[class*="arrowLeft"]')!);
     expect(screen.getByText('Movie A')).toBeInTheDocument();
   });
 
-  it('See Details click navigates + scrolls', () => {
+  it('Explore button click navigates + scrolls', () => {
     const original = window.scrollTo;
     window.scrollTo = vi.fn();
     renderSlider();
-    fireEvent.click(screen.getByText('See Details'));
+    fireEvent.click(screen.getByText('Explore'));
     expect(window.scrollTo).toHaveBeenCalled();
     window.scrollTo = original;
   });

@@ -1,28 +1,24 @@
 'use client';
 
 import { useGenres } from '@/hooks/useGenres';
+import styles from './Genres.module.css';
 
 interface GenresProps {
   moviesGenres?: number[];
 }
 
-/**
- * Maps genre IDs to display names from TMDB genre list.
- */
 export default function Genres({ moviesGenres }: GenresProps) {
   const { genres: allGenres } = useGenres();
 
   return (
-    <div style={{ display: 'flex' }}>
-      <p>Genres: </p>
-      {(moviesGenres || []).map((id, index) => {
+    <div className={styles.genres}>
+      {(moviesGenres || []).map((id) => {
         const genre = allGenres.find((g) => g.id === id);
+        if (!genre) return null;
         return (
-          <p key={id}>
-            <span>&nbsp;</span>
-            {genre?.name}
-            {index !== moviesGenres!.length - 1 && ','}
-          </p>
+          <span key={id} className={styles.genreTag}>
+            {genre.name}
+          </span>
         );
       })}
     </div>

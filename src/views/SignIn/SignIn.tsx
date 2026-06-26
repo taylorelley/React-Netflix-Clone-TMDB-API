@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useContext, type FormEvent } from 'react';
+import { useState, useContext, useRef, useEffect, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import gsap from 'gsap';
 import { UserContext } from '@/context/UserContext';
 import { ThemeContext } from '@/context/ThemeContext';
 import styles from './SignIn.module.css';
@@ -18,6 +19,7 @@ export default function SignIn() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSignIn = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -44,56 +46,78 @@ export default function SignIn() {
     }
   };
 
-  const containerClass = darkMode
-    ? styles.signupContainer
-    : `${styles.signupContainer} ${styles.signupLight}`;
-  const inputClass = darkMode
-    ? styles.inputWrapper
-    : `${styles.inputWrapper} ${styles.inputWrapperLight}`;
+  useEffect(() => {
+    if (!formRef.current) return;
+    gsap.fromTo(
+      formRef.current,
+      { y: 40, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.2, ease: 'expo.out', delay: 0.3 },
+    );
+    gsap.fromTo(
+      formRef.current.querySelectorAll(`.${styles.inputGroup}`),
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, stagger: 0.12, duration: 0.8, ease: 'power3.out', delay: 0.6 },
+    );
+  }, []);
+
+  const containerClass = darkMode ? styles.container : `${styles.container} ${styles.light}`;
 
   return (
     <div className={containerClass}>
+      <div className={styles.bgGradient} />
       {token ? (
-        <p>You are already logged in.</p>
+        <div className={styles.alreadyLoggedIn}>
+          <p>You are already logged in.</p>
+        </div>
       ) : (
-        <form className={styles.signupForm} onSubmit={handleSignIn}>
-          <div className={styles.titleContainer}>
-            <h1>Sign In</h1>
-            <p>Please fill in this form to login.</p>
+        <form ref={formRef} className={styles.form} onSubmit={handleSignIn}>
+          <div className={styles.formHeader}>
+            <h1>Welcome Back</h1>
+            <p>Sign in to continue your cinematic journey</p>
           </div>
-          <div className={inputClass}>
-            <label htmlFor="email">Email</label>
+
+          <div className={styles.inputGroup}>
             <input
               value={email}
               type="email"
-              placeholder="Enter Email"
-              name="email"
+              placeholder=" "
+              id="email"
+              className={styles.input}
               required
               onChange={(e) => setEmail(e.target.value)}
             />
+            <label htmlFor="email" className={styles.label}>
+              Email
+            </label>
+            <div className={styles.inputLine} />
           </div>
-          <div className={inputClass}>
-            <label htmlFor="psw">Password</label>
+
+          <div className={styles.inputGroup}>
             <input
               value={password}
               type="password"
-              placeholder="Enter Password"
-              name="psw"
+              placeholder=" "
+              id="psw"
+              className={styles.input}
               required
               onChange={(e) => setPassword(e.target.value)}
             />
+            <label htmlFor="psw" className={styles.label}>
+              Password
+            </label>
+            <div className={styles.inputLine} />
           </div>
-          {error ? <p className={styles.successMessage}>{error}</p> : null}
-          <div className={styles.buttonContainer}>
-            <button type="reset" className={styles.cancelbtn}>
-              Cancel
-            </button>
-            <button type="submit" className={styles.signupbtn}>
+
+          {error ? <p className={styles.error}>{error}</p> : null}
+
+          <div className={styles.formActions}>
+            <button type="submit" className={styles.submitBtn} data-cursor-hover>
               Sign In
             </button>
           </div>
-          <p>
-            Don&apos;t have an account? <Link href="/signup">Signup</Link>
+
+          <p className={styles.formFooter}>
+            Don&apos;t have an account? <Link href="/signup">Create one</Link>
           </p>
         </form>
       )}

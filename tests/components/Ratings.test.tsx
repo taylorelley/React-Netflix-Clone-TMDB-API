@@ -18,9 +18,10 @@ describe('Ratings', () => {
     expect(container.querySelector('[class*="rating"]')).toBeTruthy();
   });
 
-  it('renders 5 star characters', () => {
+  it('renders 5 star characters plus value', () => {
     const { container } = render(<Ratings movieRating={3} />);
+    // 5 star spans + 1 value span = 6 total spans
     const stars = container.querySelectorAll('span');
-    expect(stars.length).toBe(5);
+    expect(stars.length).toBe(6);
   });
 });

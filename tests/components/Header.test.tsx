@@ -32,7 +32,7 @@ beforeEach(() => {
 describe('Header', () => {
   it('renders logo link', () => {
     renderHeader();
-    expect(screen.getByText('Netflix')).toBeInTheDocument();
+    expect(screen.getByText('CINEMA')).toBeInTheDocument();
   });
 
   it('renders search input', () => {
@@ -40,12 +40,11 @@ describe('Header', () => {
     expect(screen.getByPlaceholderText('Search movies...')).toBeInTheDocument();
   });
 
-  it('toggles dark mode when theme icon clicked', () => {
+  it('toggles dark mode when theme toggle clicked', () => {
     renderHeader();
-    const icons = document.querySelectorAll('[class*="themeIcon"]');
-    expect(icons.length).toBeGreaterThan(0);
-    const firstIcon = icons[0];
-    if (firstIcon) fireEvent.click(firstIcon);
+    const toggle = document.querySelector('[class*="themeToggle"]');
+    expect(toggle).toBeTruthy();
+    if (toggle) fireEvent.click(toggle);
     expect(localStorage.getItem('darkMode')).toBe(JSON.stringify(false));
   });
 

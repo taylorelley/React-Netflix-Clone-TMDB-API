@@ -1,85 +1,281 @@
-.sliderOverlay {
-  background: rgb(0, 0, 0);
-  background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 0) 100%);
-  position: absolute;
-  height: 100%;
-  width: 100%;
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  max-height: 900px;
+  overflow: hidden;
 }
-.rightArrow,
-.leftArrow {
-  color: var(--red);
-  font-size: 4rem;
-  cursor: pointer;
+
+.heroBg {
   position: absolute;
-  top: 45%;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  transform: scale(1.08);
+  will-change: transform;
+  transition: background-image 0.6s ease;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(10, 10, 10, 0.85) 0%,
+    rgba(10, 10, 10, 0.4) 40%,
+    rgba(10, 10, 10, 0.1) 70%,
+    transparent 100%
+  );
+  z-index: 1;
+}
+
+.heroOverlayBottom {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(10, 10, 10, 0.5) 70%,
+    var(--bg-primary) 100%
+  );
+  z-index: 1;
+}
+
+/* ── Content ── */
+.heroContent {
+  position: absolute;
+  bottom: 18%;
+  left: clamp(24px, 6vw, 80px);
+  max-width: 580px;
   z-index: 2;
 }
-.rightArrow:hover,
-.leftArrow:hover {
+
+.heroTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 20px;
+}
+
+.tagDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--red);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.heroDesc {
+  font-family: var(--font-body);
+  font-size: clamp(0.85rem, 1.3vw, 1rem);
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 480px;
+  margin-bottom: 20px;
+}
+
+.heroMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+.heroDivider {
+  color: var(--text-tertiary);
+  opacity: 0.4;
+  font-size: 0.6rem;
+}
+
+.heroCta {
+  display: flex;
+  gap: 16px;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 36px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: white;
+  background: var(--red);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaPrimary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px var(--red-glow);
+}
+
+.ctaPrimary:hover::before {
   opacity: 1;
 }
-.rightArrow {
-  right: 0;
+
+.ctaPrimary:active {
+  transform: translateY(0);
 }
-.leftArrow {
-  left: 0;
+
+.ctaPrimary svg {
+  transition: transform var(--duration-normal) var(--ease-out-expo);
 }
-.sliderInfo {
-  height: 35vh;
+
+.ctaPrimary:hover svg {
+  transform: translateX(4px);
+}
+
+/* ── Slide indicators ── */
+.slideIndicators {
   position: absolute;
-  bottom: 0;
-  width: 73%;
-  z-index: 0;
-  color: var(--white);
-  padding: 50px 60px;
-  margin-bottom: 30px;
+  bottom: 40px;
+  right: clamp(24px, 6vw, 80px);
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  top: 30%;
-  left: 10px;
+  gap: 6px;
+  z-index: 2;
+  align-items: center;
 }
-.sliderInfo h1,
-.sliderInfo p,
-.sliderInfo a {
-  margin: 8px 0;
-}
-.sliderInfo h1 {
-  font-size: 60px;
-  letter-spacing: 3px;
-}
-.sliderInfo p {
-  font-size: 20px;
-}
-.seeMoreBtn:hover {
-  color: var(--red);
+
+.indicator {
+  width: 28px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 2px;
   cursor: pointer;
+  padding: 0;
+  transition: all var(--duration-normal) var(--ease-out-expo);
 }
+
+.indicator:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.indicatorActive {
+  width: 48px;
+  background: var(--red);
+}
+
+/* ── Arrows ── */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all var(--duration-normal) var(--ease-out-expo);
+}
+
+.arrow:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--border-hover);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.arrowLeft {
+  left: 24px;
+}
+
+.arrowRight {
+  right: 24px;
+}
+
+/* ── Responsive ── */
 @media (max-width: 768px) {
-  .sliderInfo {
-    height: 40vh;
-    width: 70%;
-    padding-left: 70px;
+  .hero {
+    height: 80vh;
+    min-height: 500px;
+  }
+
+  .heroContent {
+    bottom: 22%;
+    left: 24px;
+    right: 24px;
+    max-width: none;
+  }
+
+  .arrow {
+    display: none;
+  }
+
+  .slideIndicators {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
-@media (max-width: 468px) {
-  .sliderInfo {
-    height: 35vh;
-    width: 80%;
+
+@media (max-width: 480px) {
+  .heroContent {
+    bottom: 18%;
   }
-  .sliderInfo h1 {
-    font-size: 1.5rem;
-    margin-top: 10px;
-  }
-  .sliderInfo p {
+
+  .heroMeta {
     font-size: 0.75rem;
-    margin-top: 10px;
   }
-  .sliderInfo a {
+
+  .ctaPrimary {
+    padding: 12px 28px;
     font-size: 0.75rem;
-    margin-top: 10px;
-  }
-  .sliderDescription {
-    display: none;
   }
 }

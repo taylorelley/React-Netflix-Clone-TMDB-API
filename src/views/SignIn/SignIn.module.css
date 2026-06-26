@@ -1,83 +1,194 @@
-.signupContainer {
+.container {
   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-primary);
   margin-top: var(--header-height);
-  color: var(--white);
-  font-size: 1.2rem;
-  padding-top: 20vh;
 }
-.signupLight {
-  background-color: var(--light-bg);
-  color: black;
+
+.light {
+  background: var(--light-bg);
 }
-.signupContainer a {
+
+.bgGradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, var(--red-subtle) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(201, 168, 76, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.form {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: 48px 40px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.formHeader {
+  margin-bottom: 36px;
+}
+
+.formHeader h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.formHeader p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-tertiary);
+}
+
+.inputGroup {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.input {
+  width: 100%;
+  padding: 16px 0 8px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  outline: none;
+  transition: border-color var(--duration-normal) var(--ease-out-expo);
+}
+
+.input:focus {
+  border-bottom-color: var(--red);
+}
+
+.label {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-tertiary);
+  pointer-events: none;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+}
+
+.input:focus ~ .label,
+.input:not(:placeholder-shown) ~ .label {
+  top: 0;
+  font-size: 0.75rem;
   color: var(--red);
-  font-style: italic;
-  cursor: pointer;
 }
-.signupForm {
-  width: 50%;
-  margin: 0 auto;
-  min-height: 50vh;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px 0px rgba(118, 118, 118, 0.75);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+
+.inputLine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--red);
+  transition: width var(--duration-normal) var(--ease-out-expo);
 }
-.titleContainer p {
-  margin-top: 5px;
+
+.input:focus ~ .inputLine {
+  width: 100%;
 }
-.inputWrapper {
-  display: flex;
-  flex-direction: column;
-  width: 60%;
-  margin: 20px auto;
+
+.error {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--red);
+  margin-bottom: 16px;
+  padding: 12px;
+  background: var(--red-subtle);
+  border-radius: var(--radius-sm);
 }
-.inputWrapper input {
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  margin-top: 10px;
+
+.formActions {
+  margin-top: 32px;
 }
-.inputWrapperLight input {
-  border: solid 1px var(--footer-bg);
-}
-.cancelbtn,
-.signupbtn {
-  border: none;
-  padding: 5px 16px;
-  border-radius: 8px;
+
+.submitBtn {
+  width: 100%;
+  padding: 16px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   color: white;
+  background: var(--red);
+  border: none;
+  border-radius: var(--radius-full);
   cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+  position: relative;
+  overflow: hidden;
 }
-.successMessage {
-  font-size: 1.5rem;
-  font-style: italic;
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
 }
-.buttonContainer {
-  display: flex;
-  justify-content: space-around;
-  width: 60%;
-  margin: 20px auto;
+
+.submitBtn:active {
+  transform: translateY(0);
 }
-.cancelbtn {
-  background-color: var(--red);
+
+.formFooter {
+  margin-top: 24px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-tertiary);
 }
-.signupbtn {
-  background-color: green;
+
+.formFooter a {
+  color: var(--red);
+  font-weight: 500;
+  transition: color var(--duration-fast);
 }
+
+.formFooter a:hover {
+  color: #ff4d5a;
+}
+
+.alreadyLoggedIn {
+  position: relative;
+  padding: 48px 40px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  text-align: center;
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+}
+
 @media (max-width: 768px) {
-  .signupForm {
-    width: 95%;
-  }
-  .inputWrapper,
-  .buttonContainer {
-    width: 80%;
+  .form {
+    padding: 36px 28px;
   }
 }
+
 @media (max-width: 600px) {
-  .signupContainer {
+  .container {
     margin-top: var(--header-height-mobile);
+    padding: var(--space-md);
   }
 }

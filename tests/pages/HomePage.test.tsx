@@ -6,6 +6,43 @@ import HomePage from '@/views/HomePage/HomePage';
 import ThemeContextProvider from '@/context/ThemeContext';
 import type { Movie } from '@/types/tmdb';
 
+// Mock GSAP and ScrollTrigger for jsdom environment
+vi.mock('gsap', () => ({
+  __esModule: true,
+  default: {
+    registerPlugin: vi.fn(),
+    from: vi.fn(),
+    fromTo: vi.fn(),
+    to: vi.fn(),
+    context: () => ({ revert: vi.fn() }),
+    timeline: () => ({
+      from: vi.fn().mockReturnThis(),
+      fromTo: vi.fn().mockReturnThis(),
+      to: vi.fn().mockReturnThis(),
+      kill: vi.fn(),
+    }),
+  },
+  gsap: {
+    registerPlugin: vi.fn(),
+    from: vi.fn(),
+    fromTo: vi.fn(),
+    to: vi.fn(),
+    context: () => ({ revert: vi.fn() }),
+    timeline: () => ({
+      from: vi.fn().mockReturnThis(),
+      fromTo: vi.fn().mockReturnThis(),
+      to: vi.fn().mockReturnThis(),
+      kill: vi.fn(),
+    }),
+  },
+}));
+
+vi.mock('gsap/ScrollTrigger', () => ({
+  __esModule: true,
+  default: {},
+  ScrollTrigger: {},
+}));
+
 vi.mock('@/hooks/usePopularMovies', () => ({
   usePopularMovies: vi.fn().mockReturnValue({
     movies: [
@@ -72,7 +109,7 @@ describe('HomePage', () => {
 
   it('renders top-rated section title', () => {
     renderHome();
-    expect(screen.getByText('Top Rated Movies')).toBeInTheDocument();
+    expect(screen.getByText('Top Rated')).toBeInTheDocument();
   });
 
   it('renders 10 page numbers', () => {
@@ -84,7 +121,7 @@ describe('HomePage', () => {
   it('clicking page 2 sets page state', () => {
     renderHome();
     fireEvent.click(screen.getByText('2'));
-    const currentPageEl = document.querySelector('[class*="currentPage"]');
+    const currentPageEl = document.querySelector('[class*="pageBtnActive"]');
     expect(currentPageEl).toBeTruthy();
     expect(currentPageEl?.textContent).toBe('2');
   });

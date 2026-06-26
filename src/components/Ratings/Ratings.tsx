@@ -6,10 +6,6 @@ interface RatingsProps {
   movieRating: number;
 }
 
-/**
- * Star rating display component.
- * @param props.movieRating Rating out of 5
- */
 export default function Ratings({ movieRating }: RatingsProps) {
   const rating = Number.isFinite(movieRating) ? Math.max(0, Math.min(5, movieRating)) : 0;
   const full = Math.floor(rating);
@@ -25,5 +21,10 @@ export default function Ratings({ movieRating }: RatingsProps) {
       </span>,
     );
   }
-  return <div className={styles.rating}>{stars}</div>;
+  return (
+    <div className={styles.rating}>
+      <span className={styles.value}>{rating.toFixed(1)}</span>
+      <div className={styles.stars}>{stars}</div>
+    </div>
+  );
 }

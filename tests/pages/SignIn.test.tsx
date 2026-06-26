@@ -37,8 +37,8 @@ const renderSignIn = () =>
 describe('SignIn', () => {
   it('renders email + password inputs', () => {
     renderSignIn();
-    expect(screen.getByPlaceholderText('Enter Email')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Enter Password')).toBeInTheDocument();
+    expect(screen.getByLabelText('Email')).toBeInTheDocument();
+    expect(screen.getByLabelText('Password')).toBeInTheDocument();
   });
 
   it('submit posts credentials to /api/users/login', async () => {
@@ -48,8 +48,8 @@ describe('SignIn', () => {
       json: () => Promise.resolve({ token: 'tk' }),
     });
     renderSignIn();
-    fireEvent.change(screen.getByPlaceholderText('Enter Email'), { target: { value: 'a@b.c' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter Password'), { target: { value: 'pw' } });
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'a@b.c' } });
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'pw' } });
     fireEvent.click(screen.getByRole('button', { name: /Sign In/i }));
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
@@ -64,8 +64,8 @@ describe('SignIn', () => {
       json: () => Promise.resolve({ token: 'mytoken' }),
     });
     renderSignIn();
-    fireEvent.change(screen.getByPlaceholderText('Enter Email'), { target: { value: 'a@b.c' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter Password'), { target: { value: 'pw' } });
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'a@b.c' } });
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'pw' } });
     fireEvent.click(screen.getByRole('button', { name: /Sign In/i }));
     await waitFor(() => expect(localStorage.getItem('token')).toBe('mytoken'));
   });
@@ -89,8 +89,8 @@ describe('SignIn', () => {
       json: () => Promise.resolve({}),
     });
     renderSignIn();
-    fireEvent.change(screen.getByPlaceholderText('Enter Email'), { target: { value: 'a@b.c' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter Password'), { target: { value: 'pw' } });
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'a@b.c' } });
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'pw' } });
     fireEvent.click(screen.getByRole('button', { name: /Sign In/i }));
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
   });
@@ -99,7 +99,7 @@ describe('SignIn', () => {
     localStorage.setItem('darkMode', JSON.stringify(false));
     const { container } = renderSignIn();
     await waitFor(() => {
-      expect(container.querySelector('[class*="signupLight"]')).toBeTruthy();
+      expect(container.querySelector('[class*="light"]')).toBeTruthy();
     });
   });
 });

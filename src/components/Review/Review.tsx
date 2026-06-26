@@ -11,9 +11,6 @@ interface ReviewProps {
   review: ReviewType;
 }
 
-/**
- * Displays an expandable user review with avatar fallback.
- */
 export default function Review({ review }: ReviewProps) {
   const [seeMore, setSeeMore] = useState<boolean>(false);
   const [imageError, setImageError] = useState<boolean>(false);
@@ -25,10 +22,8 @@ export default function Review({ review }: ReviewProps) {
       ? (avatar as unknown as string)
       : `https://image.tmdb.org/t/p/w500/${review.author_details.avatar_path}`;
 
-  const contentClass = darkMode ? styles.content : `${styles.content} ${styles.contentLight}`;
-
   return (
-    <div key={review.id} className={styles.review}>
+    <div className={`${styles.review} details-review`}>
       <div className={styles.avatarContainer}>
         <Image
           className={styles.avatar}
@@ -39,26 +34,30 @@ export default function Review({ review }: ReviewProps) {
           unoptimized
           onError={() => setImageError(true)}
         />
-        <p>{review.author}</p>
+        <p className={styles.authorName}>{review.author}</p>
       </div>
 
-      {!seeMore ? (
-        <p className={contentClass}>
-          {review.content?.slice(0, 300)}...
-          <span onClick={() => setSeeMore(true)} className={styles.readMore}>
-            {' '}
-            read more
-          </span>
-        </p>
-      ) : (
-        <p className={contentClass}>
-          {review.content}
-          <span onClick={() => setSeeMore(false)} className={styles.readLess}>
-            {' '}
-            read less
-          </span>
-        </p>
-      )}
+      <div className={styles.contentWrapper}>
+        {!seeMore ? (
+          <p className={styles.content}>
+            {review.content?.slice(0, 300)}
+            {review.content && review.content.length > 300 && (
+              <span onClick={() => setSeeMore(true)} className={styles.readMore}>
+                {' '}
+                read more
+              </span>
+            )}
+          </p>
+        ) : (
+          <p className={styles.content}>
+            {review.content}
+            <span onClick={() => setSeeMore(false)} className={styles.readMore}>
+              {' '}
+              show less
+            </span>
+          </p>
+        )}
+      </div>
     </div>
   );
 }

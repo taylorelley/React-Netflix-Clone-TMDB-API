@@ -78,7 +78,7 @@ describe('MovieDetails', () => {
 
   it('renders trailer section when key present', () => {
     const { container } = renderDetails();
-    expect(container.querySelector('[class*="trailerContainer"]')).toBeTruthy();
+    expect(container.querySelector('[class*="trailerWrapper"]')).toBeTruthy();
   });
 
   it('renders reviews', () => {
@@ -88,10 +88,10 @@ describe('MovieDetails', () => {
 
   it('read more reviews increments count', () => {
     renderDetails();
-    expect(screen.getByText(/Read more reviews/)).toBeInTheDocument();
+    expect(screen.getByText(/Load More/)).toBeInTheDocument();
   });
 
-  it('shows End of reviews when all reviews visible', () => {
+  it('shows Show Less when all reviews visible', () => {
     useMovieReviewsMock.mockReturnValue({
       reviews: mockReviews.slice(0, 1),
       totalReviews: 1,
@@ -99,22 +99,22 @@ describe('MovieDetails', () => {
       error: null,
     });
     renderDetails();
-    expect(screen.getByText(/End of reviews/)).toBeInTheDocument();
+    expect(screen.getByText(/Show Less/)).toBeInTheDocument();
   });
 
   it('renders blank trailer fallback when key is null', () => {
     useMovieTrailerMock.mockReturnValue({ trailerKey: null, loading: false, error: null });
     const { container } = renderDetails();
-    expect(container.querySelector('[class*="trailerContainerBlank"]')).toBeTruthy();
+    expect(container.querySelector('[class*="noTrailer"]')).toBeTruthy();
   });
 
-  it('expands review count when Read more reviews clicked', () => {
+  it('expands review count when Load More clicked', () => {
     renderDetails();
-    fireEvent.click(screen.getByText(/Read more reviews/));
-    expect(screen.getByText(/End of reviews/)).toBeInTheDocument();
+    fireEvent.click(screen.getByText(/Load More/));
+    expect(screen.getByText(/Show Less/)).toBeInTheDocument();
   });
 
-  it('clicking End of reviews collapses back', () => {
+  it('clicking Show Less collapses back', () => {
     useMovieReviewsMock.mockReturnValue({
       reviews: mockReviews,
       totalReviews: 4,
@@ -122,10 +122,10 @@ describe('MovieDetails', () => {
       error: null,
     });
     renderDetails();
-    fireEvent.click(screen.getByText(/Read more reviews/));
-    expect(screen.getByText(/End of reviews/)).toBeInTheDocument();
-    fireEvent.click(screen.getByText(/End of reviews/));
-    expect(screen.getByText(/Read more reviews/)).toBeInTheDocument();
+    fireEvent.click(screen.getByText(/Load More/));
+    expect(screen.getByText(/Show Less/)).toBeInTheDocument();
+    fireEvent.click(screen.getByText(/Show Less/));
+    expect(screen.getByText(/Load More/)).toBeInTheDocument();
   });
 
   it('uses the hook from useMovieDetails', () => {

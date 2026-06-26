@@ -33,7 +33,8 @@ describe('MovieCard', () => {
 
   it('renders rating display', () => {
     renderCard();
-    expect(screen.getByText(/Rating: 4/)).toBeInTheDocument();
+    // vote_average 8.4 → Math.round(8.4/2) = 4 → displayed as "4.0"
+    expect(screen.getByText('4.0')).toBeInTheDocument();
   });
 
   it('navigates to /moviedetails/{id} on click', () => {
@@ -46,7 +47,8 @@ describe('MovieCard', () => {
   });
 
   it('renders without data prop (rating 0)', () => {
-    render(<MovieCard imageUrl="/x.jpg" cardStyle="popular-card" />);
-    expect(screen.getAllByText(/Rating:/).length).toBeGreaterThan(0);
+    const { container } = render(<MovieCard imageUrl="/x.jpg" cardStyle="popular-card" />);
+    // Ratings component renders with value "0.0"
+    expect(container.textContent).toContain('0.0');
   });
 });

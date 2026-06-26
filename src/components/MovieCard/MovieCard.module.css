@@ -1,58 +1,131 @@
-.popularCard {
+.card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
   cursor: pointer;
-  margin: 20px 20px 0 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow var(--duration-normal) var(--ease-out-expo);
+  flex-shrink: 0;
 }
-.movieInfoTop {
-  visibility: hidden;
-  position: absolute;
-  top: 0;
-  padding: 5px;
-  color: var(--red);
-  text-align: center;
+
+.card:hover {
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 30px var(--red-subtle);
 }
-.movieInfoBottom {
-  visibility: hidden;
-  height: auto;
-  width: 100%;
+
+.popular {
+  aspect-ratio: 2 / 3;
+}
+
+.topRated {
+  aspect-ratio: 16 / 9;
+}
+
+.cardImage {
   position: absolute;
-  bottom: 0;
-  background-color: var(--transparent-bg);
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.card:hover .cardImage {
+  transform: scale(1.08);
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-md);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.5) 0%,
+    transparent 30%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out-expo);
+}
+
+.card:hover .cardOverlay {
+  opacity: 1;
+}
+
+.cardTop {
+  align-self: flex-start;
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+  transition-delay: 0.05s;
+}
+
+.card:hover .cardTop {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.cardBottom {
+  transform: translateY(10px);
+  opacity: 0;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+  transition-delay: 0.1s;
+}
+
+.card:hover .cardBottom {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.cardBottom h3 {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.cardMeta {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  color: var(--white);
-  flex-wrap: wrap;
-}
-.movieInfoBottom p {
-  text-align: center;
-}
-.movieInfoBottom p:last-child {
-  color: rgb(253, 204, 13);
-}
-.popularCard:hover .movieInfoTop {
-  visibility: visible;
-  animation: myAnim 1s ease 0s 1 normal forwards;
-}
-.popularCard:hover .movieInfoBottom {
-  visibility: visible;
-  animation: myAnim 1s ease 0s 1 normal forwards;
-}
-.topRatedCard {
-  padding: 10px;
+  gap: 12px;
+  font-family: var(--font-body);
   font-size: 0.75rem;
-  margin: 0 auto;
-  cursor: pointer;
-  color: var(--white);
+  color: var(--text-secondary);
 }
-.topRatedCard p {
-  margin-top: 10px;
+
+.cardRating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--gold);
+  font-weight: 600;
 }
-@keyframes myAnim {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+
+.cardShine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out-expo);
+  mix-blend-mode: overlay;
+}
+
+.card:hover .cardShine {
+  opacity: 1;
+}
+
+.topRated .cardOverlay {
+  padding: var(--space-sm);
+}
+
+.topRated .cardBottom h3 {
+  font-size: 0.8rem;
 }

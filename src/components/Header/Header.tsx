@@ -1,7 +1,8 @@
 'use client';
 
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import gsap from 'gsap';
 import { ThemeContext } from '@/context/ThemeContext';
 import { useSearch } from '@/hooks/useSearch';
 import SearchResults from '../SearchResults/SearchResults';
@@ -14,6 +15,10 @@ export default function Header() {
   const setDarkMode = ctx?.setDarkMode ?? (() => {});
   const [query, setQuery] = useState<string>('');
   const { results: searchResults } = useSearch(query);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   const handleTheme = (): void => {
     const newDarkMode = !darkMode;
@@ -23,46 +28,114 @@ export default function Header() {
     }
   };
 
-  const containerClass = darkMode
-    ? styles.headerContainer
-    : `${styles.headerContainer} ${styles.headerLight}`;
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (headerRef.current) {
+      gsap.from(headerRef.current, {
+        y: -80,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'expo.out',
+        delay: 0.2,
+      });
+    }
+  }, []);
+
+  const containerClass = [
+    styles.headerContainer,
+    scrolled ? styles.scrolled : '',
+    darkMode ? '' : styles.headerLight,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <div className={containerClass}>
-      <Link className={styles.logo} href="/">
-        Netflix
+    <div ref={headerRef} className={containerClass}>
+      <Link className={styles.logo} href="/" data-cursor-hover>
+        <span className={styles.logoText}>CINEMA</span>
       </Link>
-      <div className={styles.searchContainer}>
-        <input
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className={`${styles.searchInput} ${query ? styles.inputActive : ''}`}
-          placeholder="Search movies..."
-        />
 
-        {query.trim() !== '' && (
-          <div className={styles.searchResultsContainer}>
-            {searchResults.map((movie) => (
-              <SearchResults setQuery={setQuery} key={movie.id} movie={movie} />
-            ))}
-          </div>
-        )}
-      </div>
+      <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ''}`}>
+        <Link
+          href="/"
+          className={styles.navLink}
+          data-cursor-hover
+          onClick={() => setMenuOpen(false)}
+        >
+          Home
+        </Link>
+        <Link
+          href="/myfavorites"
+          className={styles.navLink}
+          data-cursor-hover
+          onClick={() => setMenuOpen(false)}
+        >
+          Favorites
+        </Link>
+        <Link
+          href="/signin"
+          className={styles.navLink}
+          data-cursor-hover
+          onClick={() => setMenuOpen(false)}
+        >
+          Sign In
+        </Link>
+      </nav>
 
-      <div className={styles.headerButtonsContainer}>
-        <div className={styles.themeButtons}>
-          {darkMode ? (
-            <>
-              <MdOutlineLightMode onClick={handleTheme} className={styles.themeIcon} />
-              <MdOutlineDarkMode className={`${styles.themeIcon} ${styles.themeIconActive}`} />
-            </>
-          ) : (
-            <>
-              <MdOutlineLightMode className={`${styles.themeIcon} ${styles.themeIconActive}`} />
-              <MdOutlineDarkMode onClick={handleTheme} className={styles.themeIcon} />
-            </>
+      <div className={styles.rightSection}>
+        <div className={`${styles.searchContainer} ${searchFocused ? styles.searchExpanded : ''}`}>
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => setSearchFocused(true)}
+            onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
+            className={styles.searchInput}
+            placeholder="Search movies..."
+            data-cursor-hover
+          />
+          <svg
+            className={styles.searchIcon}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+
+          {query.trim() !== '' && (
+            <div className={styles.searchResultsContainer}>
+              {searchResults.map((movie) => (
+                <SearchResults setQuery={setQuery} key={movie.id} movie={movie} />
+              ))}
+            </div>
           )}
         </div>
+
+        <div className={styles.themeToggle} onClick={handleTheme} data-cursor-hover>
+          {darkMode ? (
+            <MdOutlineLightMode className={styles.themeIcon} />
+          ) : (
+            <MdOutlineDarkMode className={styles.themeIcon} />
+          )}
+        </div>
+
+        <button
+          className={`${styles.hamburger} ${menuOpen ? styles.hamburgerOpen : ''}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          data-cursor-hover
+          aria-label="Toggle menu"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
       </div>
     </div>
   );
