@@ -58,4 +58,21 @@ describe('Header', () => {
     fireEvent.change(input, { target: { value: 'avengers' } });
     await waitFor(() => expect(screen.getByText('Result')).toBeInTheDocument());
   });
+
+  it('adds scrolled class on scroll', () => {
+    renderHeader();
+    Object.defineProperty(window, 'scrollY', { value: 100, writable: true });
+    fireEvent.scroll(window);
+    const container = document.querySelector('[class*="scrolled"]');
+    expect(container).toBeTruthy();
+  });
+
+  it('toggles mobile menu when hamburger clicked', () => {
+    renderHeader();
+    const hamburger = document.querySelector('[class*="hamburger"]') as HTMLElement;
+    expect(hamburger).toBeTruthy();
+    if (hamburger) fireEvent.click(hamburger);
+    const nav = document.querySelector('[class*="navOpen"]');
+    expect(nav).toBeTruthy();
+  });
 });

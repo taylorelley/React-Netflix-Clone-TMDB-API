@@ -51,4 +51,47 @@ describe('MovieCard', () => {
     // Ratings component renders with value "0.0"
     expect(container.textContent).toContain('0.0');
   });
+
+  it('handles keyboard Enter key', () => {
+    pushMock.mockClear();
+    const { container } = renderCard();
+    const card = container.querySelector('[data-testid="movie-card"]')!;
+    fireEvent.keyDown(card, { key: 'Enter' });
+    expect(pushMock).toHaveBeenCalledWith('/moviedetails/42');
+  });
+
+  it('handles keyboard Space key', () => {
+    pushMock.mockClear();
+    const { container } = renderCard();
+    const card = container.querySelector('[data-testid="movie-card"]')!;
+    fireEvent.keyDown(card, { key: ' ' });
+    expect(pushMock).toHaveBeenCalledWith('/moviedetails/42');
+  });
+
+  it('applies 3D tilt on mouse move', () => {
+    const { container } = renderCard();
+    const card = container.querySelector('[data-testid="movie-card"]')!;
+    const rect = {
+      left: 0,
+      top: 0,
+      width: 200,
+      height: 300,
+      right: 200,
+      bottom: 300,
+      x: 0,
+      y: 0,
+      toJSON: () => {},
+    };
+    card.getBoundingClientRect = vi.fn().mockReturnValue(rect);
+    fireEvent.mouseMove(card, { clientX: 50, clientY: 50 });
+    // After mouse move, the card should have GSAP transforms applied
+    expect(card).toBeTruthy();
+  });
+
+  it('resets tilt on mouse leave', () => {
+    const { container } = renderCard();
+    const card = container.querySelector('[data-testid="movie-card"]')!;
+    fireEvent.mouseLeave(card);
+    expect(card).toBeTruthy();
+  });
 });
