@@ -19,7 +19,7 @@ test.describe('Auth flow', () => {
       localStorage.setItem('token', 'preset-token');
     });
     await page.goto('/signin');
-    await expect(page.getByText(/already logged in/i)).toBeVisible();
+    await expect(page.getByText('You are already logged in.')).toBeVisible();
   });
 
   test('signin form submit triggers request to /api/users/login (network mocked)', async ({

@@ -57,7 +57,7 @@ test.describe('Home page', () => {
 
   test('renders hero slider with upcoming movie', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('[class*="sliderInfo"] h1')).toHaveText('Upcoming 1');
+    await expect(page.locator('[class*="heroContent"] h1')).toHaveText('Upcoming 1');
   });
 
   test('renders popular section title and cards', async ({ page }) => {
@@ -68,7 +68,7 @@ test.describe('Home page', () => {
 
   test('renders top rated section title', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByText('Top Rated Movies')).toBeVisible();
+    await expect(page.getByText('Top Rated')).toBeVisible();
   });
 
   test('renders 10 pagination numbers', async ({ page }) => {

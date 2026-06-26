@@ -51,12 +51,12 @@ test.describe('Movie details page', () => {
 
   test('renders movie title', async ({ page }) => {
     await page.goto('/moviedetails/550');
-    await expect(page.locator('[class*="titleContainer"] h1')).toHaveText('Fight Club');
+    await expect(page.locator('[class*="info"] h1')).toHaveText('Fight Club');
   });
 
   test('renders trailer section when key present', async ({ page }) => {
     await page.goto('/moviedetails/550');
-    await expect(page.locator('[class*="trailerContainer"]')).toBeVisible();
+    await expect(page.locator('[class*="trailerWrapper"]')).toBeVisible();
   });
 
   test('renders reviews section', async ({ page }) => {
@@ -66,11 +66,11 @@ test.describe('Movie details page', () => {
     await expect(page.locator('[class*="avatarContainer"]')).toHaveCount(2);
   });
 
-  test('falls back to blank poster when trailer key is null', async ({ page }) => {
+  test('falls back to no trailer when trailer key is null', async ({ page }) => {
     await mockTmdbApi(page, {
       '**/api/tmdb/movie/550/videos*': { results: [] },
     });
     await page.goto('/moviedetails/550');
-    await expect(page.locator('[class*="trailerContainerBlank"]')).toBeVisible();
+    await expect(page.locator('[class*="noTrailer"]')).toBeVisible();
   });
 });
