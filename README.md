@@ -1,65 +1,100 @@
-# React Netflix Clone (TMDB API)
+# Netflix Clone (TMDB API)
 
-A Netflix clone project built with React.js, utilizing a Single Page Application (SPA) architecture. The application leverages the TMDB API to fetch movies, reviews, and trailers, providing users with an immersive movie-watching experience.
+A Netflix-style movie browser built with **Next.js 16 (App Router)**, **React 19**, and **TypeScript 5**, powered by the TMDB API. The TMDB API key is kept server-side via a Next.js Route Handler with `use cache`; the client never sees it.
 
-## Introduction
+## Test coverage
 
-The React Netflix Clone is a project created with React.js, offering a user-friendly interface to explore movies, read reviews, and watch trailers. The application dynamically fetches data from the TMDB API, ensuring an up-to-date catalog of movies.
+| Metric     | Coverage   |
+| ---------- | ---------- |
+| Statements | **99.01%** |
+| Branches   | **86.16%** |
+| Functions  | **100%**   |
+| Lines      | **99.01%** |
 
-## Features
+`npm run test:coverage` (Vitest + v8) — 23 test files, 135 tests. All `src/hooks/*` and `src/lib/tmdb.ts` at 100%; remaining gap is `src/types/` (type-only files, no runtime).
 
-- Browse a wide range of movies
-- Read reviews for each movie
-- Watch trailers for selected movies
+E2E (Playwright, 15 tests) and the production build (`npx next build`) are also part of CI — see `.github/workflows/ci.yml`.
 
-## Technologies Used
+## Stack
 
-- React.js
-- Single Page Application (SPA) architecture
-- TMDB API
+- **Framework**: Next.js 16.2 (App Router, Turbopack, Cache Components)
+- **Runtime**: React 19.2
+- **Language**: TypeScript 5 (strict, `noUncheckedIndexedAccess`)
+- **Styling**: CSS Modules
+- **Data**: TMDB API proxied through `/api/tmdb/[...path]` route handler
+- **Tests**: Vitest + React Testing Library + Playwright
+- **Lint**: ESLint 9 (flat config) + `eslint-config-next` + `typescript-eslint`
+- **CI**: GitHub Actions — lint → typecheck → unit → e2e → build, Node 20.9
 
-## Installation
+## Local development
 
-To run the project locally, follow these steps:
+1. Install dependencies:
 
-1. Clone the repository:
+   ```bash
+   npm install
+   ```
 
-    ```bash
-    git clone https://github.com/1uckyswish/React-Netflix-Clone-TMDB-API.git
-    ```
+2. Set the TMDB key (server-side only):
 
-2. Navigate to the project directory:
+   ```bash
+   cp .env.example .env.local
+   # then edit .env.local to set TMDB_API_KEY=...
+   ```
 
-    ```bash
-    cd React-Netflix-Clone-TMDB-API
-    ```
+3. Start the dev server:
 
-3. Install dependencies:
+   ```bash
+   npm run dev
+   ```
 
-    ```bash
-    npm install
-    ```
+   Open http://localhost:3000.
 
-4. Start the development server:
+## Scripts
 
-    ```bash
-    npm run dev
-    ```
+| Script                  | Purpose                                                |
+| ----------------------- | ------------------------------------------------------ |
+| `npm run dev`           | Start the Next.js dev server (Turbopack)               |
+| `npm run build`         | Production build (Turbopack)                           |
+| `npm start`             | Run the production build                               |
+| `npm run lint`          | ESLint (Next.js + React + TS rules)                    |
+| `npm run format`        | Prettier write all `*.{ts,tsx,js,jsx,json,css,md,yml}` |
+| `npm run format:check`  | Prettier verify (used in CI)                           |
+| `npm run typecheck`     | `tsc --noEmit` for app + test configs                  |
+| `npm run test:run`      | Vitest unit tests (single run)                         |
+| `npm run test:coverage` | Vitest with v8 coverage report                         |
+| `npm run test`          | Vitest watch mode                                      |
+| `npm run e2e`           | Playwright end-to-end tests                            |
 
-5. Open your browser and visit [http://localhost:3000](http://localhost:3000)
+## Routes
 
-## Usage
+| Path                      | Source                                                          |
+| ------------------------- | --------------------------------------------------------------- |
+| `/`                       | `src/app/page.tsx` → `src/views/HomePage/HomePage.tsx`          |
+| `/moviedetails/[movieid]` | `src/app/moviedetails/[movieid]/page.tsx`                       |
+| `/signin`                 | `src/app/signin/page.tsx`                                       |
+| `/signup`                 | `src/app/signup/page.tsx`                                       |
+| `/myfavorites`            | `src/app/myfavorites/page.tsx`                                  |
+| `/api/tmdb/[...path]`     | `src/app/api/tmdb/[...path]/route.ts` (TMDB proxy, `use cache`) |
 
-- Explore the vast movie catalog
-- Read reviews to make informed choices
-- Watch trailers to get a sneak peek
+## Project layout
 
-## Contributing
+```
+src/
+  app/                      Next.js App Router (pages + route handlers)
+  components/               Shared UI components (Header, MovieCard, ...)
+  context/                  React context providers (theme, user)
+  hooks/                    Data-fetching hooks (usePopularMovies, ...)
+  views/                    Page-level components (one per route)
+  lib/                      Pure modules (TMDB client)
+  types/                    TypeScript interfaces (Movie, Review, ...)
+  assets/                   Static assets (avatar, no-image fallback)
+tests/                      Vitest unit + integration tests
+e2e/                        Playwright E2E specs
+```
 
-If you'd like to contribute to the project, please follow these steps:
+## Notes
 
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and commit them.
-4. Push to your fork and submit a pull request.
-
+- Dev server requires **Node.js 20.9+** (Next.js 16 hard minimum).
+- The app uses Next.js 16 with explicit caching via the `"use cache"` directive in the TMDB route handler. Layout children are wrapped in `<Suspense>` to allow client components to mount cleanly.
+- All client components carry the `'use client'` directive. Server-only code (the TMDB proxy) lives in `src/app/api/...`.
+- The exposed TMDB key `8ff72cfe0871eca79c1016ea37ac82c0` was published in git history; rotate it before going to production.
