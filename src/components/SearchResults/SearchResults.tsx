@@ -27,7 +27,7 @@ export default function SearchResults({ movie, setQuery }: SearchResultsProps) {
       : `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
 
   return (
-    <div className={styles.searchResultsItem} onClick={handleNavigation} data-cursor-hover>
+    <div className={styles.searchResultsItem} onClick={handleNavigation}>
       <Image
         className={styles.resultImg}
         src={src}

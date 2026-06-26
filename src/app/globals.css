@@ -117,20 +117,11 @@ body {
   color: var(--text-primary);
   overflow-x: hidden;
   line-height: 1.6;
-  cursor: none;
 }
 
 a {
   text-decoration: none;
   color: inherit;
-}
-
-button {
-  cursor: none;
-}
-
-input {
-  cursor: none;
 }
 
 /* ── Selection ── */
@@ -196,14 +187,5 @@ input {
 @media (max-width: 768px) {
   :root {
     --header-height: 64px;
-  }
-
-  body {
-    cursor: auto;
-  }
-
-  button,
-  input {
-    cursor: auto;
   }
 }

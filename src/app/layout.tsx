@@ -5,7 +5,6 @@ import './globals.css';
 import 'lenis/dist/lenis.css';
 import CombinedContextProvider from '@/context';
 import Header from '@/components/Header/Header';
-import CustomCursor from '@/components/CustomCursor/CustomCursor';
 import SmoothScroll from '@/components/SmoothScroll/SmoothScroll';
 
 export const metadata: Metadata = {
@@ -24,8 +23,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <CombinedContextProvider>
           <SmoothScroll>
-            <CustomCursor />
-            <div className="noise-overlay" />
             <Header />
             <Suspense>{children}</Suspense>
           </SmoothScroll>

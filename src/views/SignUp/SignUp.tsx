@@ -118,7 +118,7 @@ export default function SignUp() {
         ) : null}
 
         <div className={styles.formActions}>
-          <button type="submit" className={styles.submitBtn} data-cursor-hover>
+          <button type="submit" className={styles.submitBtn}>
             Sign Up
           </button>
         </div>

@@ -171,7 +171,6 @@ export default function MovieDetails() {
             <button
               className={styles.loadMoreBtn}
               onClick={() => setReviewNumber(reviewNumber >= totalReviews ? 3 : reviewNumber + 3)}
-              data-cursor-hover
             >
               {reviewNumber >= totalReviews
                 ? 'Show Less'

@@ -111,7 +111,7 @@ export default function SignIn() {
           {error ? <p className={styles.error}>{error}</p> : null}
 
           <div className={styles.formActions}>
-            <button type="submit" className={styles.submitBtn} data-cursor-hover>
+            <button type="submit" className={styles.submitBtn}>
               Sign In
             </button>
           </div>

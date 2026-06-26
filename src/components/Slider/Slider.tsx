@@ -127,7 +127,7 @@ export default function Slider() {
           <Ratings movieRating={current ? current.vote_average / 2 : 0} />
         </div>
         <div ref={ctaRef} className={styles.heroCta}>
-          <button className={styles.ctaPrimary} onClick={handlePage} data-cursor-hover>
+          <button className={styles.ctaPrimary} onClick={handlePage}>
             <span>Explore</span>
             <svg
               width="16"
@@ -153,7 +153,6 @@ export default function Slider() {
             key={i}
             className={`${styles.indicator} ${i === index ? styles.indicatorActive : ''}`}
             onClick={() => goToSlide(i)}
-            data-cursor-hover
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
@@ -163,7 +162,6 @@ export default function Slider() {
       <button
         className={`${styles.arrow} ${styles.arrowLeft}`}
         onClick={handleLeft}
-        data-cursor-hover
         aria-label="Previous"
       >
         <svg
@@ -182,7 +180,6 @@ export default function Slider() {
       <button
         className={`${styles.arrow} ${styles.arrowRight}`}
         onClick={handleRight}
-        data-cursor-hover
         aria-label="Next"
       >
         <svg

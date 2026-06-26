@@ -56,33 +56,18 @@ export default function Header() {
 
   return (
     <div ref={headerRef} className={containerClass}>
-      <Link className={styles.logo} href="/" data-cursor-hover>
+      <Link className={styles.logo} href="/">
         <span className={styles.logoText}>Netflix</span>
       </Link>
 
       <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ''}`}>
-        <Link
-          href="/"
-          className={styles.navLink}
-          data-cursor-hover
-          onClick={() => setMenuOpen(false)}
-        >
+        <Link href="/" className={styles.navLink} onClick={() => setMenuOpen(false)}>
           Home
         </Link>
-        <Link
-          href="/myfavorites"
-          className={styles.navLink}
-          data-cursor-hover
-          onClick={() => setMenuOpen(false)}
-        >
+        <Link href="/myfavorites" className={styles.navLink} onClick={() => setMenuOpen(false)}>
           Favorites
         </Link>
-        <Link
-          href="/signin"
-          className={styles.navLink}
-          data-cursor-hover
-          onClick={() => setMenuOpen(false)}
-        >
+        <Link href="/signin" className={styles.navLink} onClick={() => setMenuOpen(false)}>
           Sign In
         </Link>
       </nav>
@@ -96,7 +81,6 @@ export default function Header() {
             onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
             className={styles.searchInput}
             placeholder="Search movies..."
-            data-cursor-hover
           />
           <svg
             className={styles.searchIcon}
@@ -118,7 +102,7 @@ export default function Header() {
           )}
         </div>
 
-        <div className={styles.themeToggle} onClick={handleTheme} data-cursor-hover>
+        <div className={styles.themeToggle} onClick={handleTheme}>
           {darkMode ? (
             <MdOutlineLightMode className={styles.themeIcon} />
           ) : (
@@ -129,7 +113,6 @@ export default function Header() {
         <button
           className={`${styles.hamburger} ${menuOpen ? styles.hamburgerOpen : ''}`}
           onClick={() => setMenuOpen(!menuOpen)}
-          data-cursor-hover
           aria-label="Toggle menu"
         >
           <span />

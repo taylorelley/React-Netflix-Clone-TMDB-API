@@ -138,7 +138,6 @@ export default function HomePage() {
                 className={`${styles.pageBtn} ${item === page ? styles.pageBtnActive : ''}`}
                 key={item}
                 onClick={() => handlePage(item)}
-                data-cursor-hover
               >
                 {item}
               </button>

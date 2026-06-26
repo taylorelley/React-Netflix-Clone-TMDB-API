@@ -90,7 +90,6 @@ export default function MovieCard({
       className={`${styles.card} ${isTopRated ? styles.topRated : styles.popular}`}
       onClick={handleClick}
       data-testid="movie-card"
-      data-cursor-hover
       style={{ width, height, borderRadius: radius }}
     >
       <div
