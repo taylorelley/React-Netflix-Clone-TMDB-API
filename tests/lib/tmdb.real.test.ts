@@ -32,13 +32,14 @@ describe('lib/tmdb.ts — fetch call paths', () => {
     fetchMock.mockResolvedValueOnce({
       ok: true,
       status: 200,
-      json: () => Promise.resolve({ results: [{ id: 1 }] }),
+      json: () => Promise.resolve({ results: [{ id: 1 }], total_pages: 5 }),
     });
     const result = await getPopularMovies(2);
     expect(fetchMock).toHaveBeenCalledWith(
       expect.stringMatching(/\/api\/tmdb\/movie\/popular\?.*page=2/),
     );
-    expect(result).toEqual([{ id: 1 }]);
+    expect(result.movies).toEqual([{ id: 1 }]);
+    expect(result.totalPages).toBe(5);
   });
 
   it('getPopularMovies defaults page to 1', async () => {

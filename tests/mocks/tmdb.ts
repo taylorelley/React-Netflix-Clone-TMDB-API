@@ -4,28 +4,33 @@ import type { Movie, Genre, Review } from '@/types/tmdb';
 // Mock implementation of TMDB API client for testing
 // This file mocks all TMDB API calls used in hooks and components
 
-export const getPopularMovies: Mock<() => Promise<Movie[]>> = vi.fn().mockResolvedValue([
-  {
-    id: 1,
-    title: 'Test Movie',
-    vote_average: 7,
-    poster_path: '/x.jpg',
-    genre_ids: [28],
-    overview: '',
-    backdrop_path: null,
-    release_date: '',
-  },
-  {
-    id: 2,
-    title: 'Another Movie',
-    vote_average: 8.5,
-    poster_path: '/y.jpg',
-    genre_ids: [35],
-    overview: '',
-    backdrop_path: null,
-    release_date: '',
-  },
-]);
+export const getPopularMovies: Mock<() => Promise<{ movies: Movie[]; totalPages: number }>> = vi
+  .fn()
+  .mockResolvedValue({
+    movies: [
+      {
+        id: 1,
+        title: 'Test Movie',
+        vote_average: 7,
+        poster_path: '/x.jpg',
+        genre_ids: [28],
+        overview: '',
+        backdrop_path: null,
+        release_date: '',
+      },
+      {
+        id: 2,
+        title: 'Another Movie',
+        vote_average: 8.5,
+        poster_path: '/y.jpg',
+        genre_ids: [35],
+        overview: '',
+        backdrop_path: null,
+        release_date: '',
+      },
+    ],
+    totalPages: 5,
+  });
 
 export const getTopRatedMovies: Mock<() => Promise<Movie[]>> = vi.fn().mockResolvedValue([]);
 

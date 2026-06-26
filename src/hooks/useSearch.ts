@@ -19,18 +19,27 @@ export function useSearch(query: string, delay: number = 300): UseSearchResult {
   useEffect(() => {
     if (!query.trim()) {
       setResults([]);
+      setLoading(false);
       return;
     }
+    let ignore = false;
     setLoading(true);
-    const timer = setTimeout(
-      () =>
-        searchMovies(query)
-          .then(setResults)
-          .catch(() => setResults([]))
-          .finally(() => setLoading(false)),
-      delay,
-    );
-    return () => clearTimeout(timer);
+    const timer = setTimeout(() => {
+      searchMovies(query)
+        .then((data) => {
+          if (!ignore) setResults(data);
+        })
+        .catch(() => {
+          if (!ignore) setResults([]);
+        })
+        .finally(() => {
+          if (!ignore) setLoading(false);
+        });
+    }, delay);
+    return () => {
+      ignore = true;
+      clearTimeout(timer);
+    };
   }, [query, delay]);
 
   return { results, loading };

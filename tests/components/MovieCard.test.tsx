@@ -33,8 +33,8 @@ describe('MovieCard', () => {
 
   it('renders rating display', () => {
     renderCard();
-    // vote_average 8.4 → Math.round(8.4/2) = 4 → displayed as "4.0"
-    expect(screen.getByText('4.0')).toBeInTheDocument();
+    // vote_average 8.4 → 8.4/2 = 4.2 → displayed as "4.2"
+    expect(screen.getByText('4.2')).toBeInTheDocument();
   });
 
   it('navigates to /moviedetails/{id} on click', () => {

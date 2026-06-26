@@ -86,7 +86,7 @@ describe('MovieDetails', () => {
     expect(screen.getByText(/Reviews/)).toBeInTheDocument();
   });
 
-  it('read more reviews increments count', () => {
+  it('shows Load More button when reviews exist', () => {
     renderDetails();
     expect(screen.getByText(/Load More/)).toBeInTheDocument();
   });

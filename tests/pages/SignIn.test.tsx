@@ -93,6 +93,7 @@ describe('SignIn', () => {
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'pw' } });
     fireEvent.click(screen.getByRole('button', { name: /Sign In/i }));
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
+    await waitFor(() => expect(screen.getByText(/Login failed/)).toBeInTheDocument());
   });
 
   it('uses light class names when darkMode is false', async () => {

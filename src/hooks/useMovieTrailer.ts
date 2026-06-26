@@ -18,11 +18,23 @@ export function useMovieTrailer(id: number | string | null): UseMovieTrailerResu
 
   useEffect(() => {
     if (!id) return;
+    let ignore = false;
     setLoading(true);
+    setError(null);
+    setTrailerKey(null);
     getMovieTrailer(id)
-      .then(setTrailerKey)
-      .catch(setError)
-      .finally(() => setLoading(false));
+      .then((data) => {
+        if (!ignore) setTrailerKey(data);
+      })
+      .catch((err) => {
+        if (!ignore) setError(err);
+      })
+      .finally(() => {
+        if (!ignore) setLoading(false);
+      });
+    return () => {
+      ignore = true;
+    };
   }, [id]);
 
   return { trailerKey, loading, error };

@@ -33,12 +33,12 @@ export default function SignIn() {
       if (!res.ok) {
         throw new Error(`Login failed: ${res.status}`);
       }
-      const data = (await res.json()) as { token: string; [k: string]: unknown };
-      setUser(data as never);
+      const data = (await res.json()) as { token: string; user?: unknown; [k: string]: unknown };
+      setUser((data.user ?? data) as never);
       setToken(data.token);
       if (typeof window !== 'undefined') {
         window.localStorage.setItem('token', data.token);
-        window.localStorage.setItem('userInfo', JSON.stringify(data));
+        window.localStorage.setItem('userInfo', JSON.stringify(data.user ?? data));
       }
       router.push('/');
     } catch (err) {

@@ -1,4 +1,4 @@
-/* http://eslint.org/docs/user-guide/configuring */
+/* https://eslint.org/docs/user-guide/configuring */
 
 import js from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
@@ -85,8 +85,8 @@ export default [
       'react-hooks/unsupported-syntax': 'off',
       'react-hooks/gating': 'off',
       'react-hooks/immutability': 'off',
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
+      'no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     },
   },
   {
@@ -106,6 +106,7 @@ export default [
     },
     rules: {
       'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
     },
   },
 ];

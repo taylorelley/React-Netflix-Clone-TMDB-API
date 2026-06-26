@@ -2,7 +2,7 @@ import type { NextConfig } from 'next';
 
 /**
  * Next.js 16 configuration.
- * - cacheComponents: opt-in to `use cache` for server-side caching.
+ * - cacheComponents: enables 'use cache' directive for server-side caching.
  * - images.remotePatterns: allow TMDB image hosts to be served via next/image.
  */
 const nextConfig: NextConfig = {

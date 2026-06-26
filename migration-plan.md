@@ -490,7 +490,7 @@ jobs:
       - run: npm ci
       - run: npm run build
     env:
-      VITE_TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+      TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
 ```
 
 Add `TMDB_API_KEY` as GitHub Actions secret.
@@ -776,7 +776,7 @@ Add / upgrade:
 - `react@19` + `react-dom@19` (bundled with Next.js 16 — React 19.2 features available)
 - `typescript@5.1+` (Next.js 16 hard minimum)
 
-No `middleware.ts` / `proxy.ts` needed for this app — no request interception required. If added later, name it `proxy.ts` (Next.js 16 convention; `middleware.ts` is deprecated).
+No `middleware.ts` needed for this app — no request interception required. If added later, name it `middleware.ts` (Next.js convention).
 
 ---
 

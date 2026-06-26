@@ -8,28 +8,31 @@ import { usePopularMovies } from '@/hooks/usePopularMovies';
 
 beforeEach(() => {
   vi.clearAllMocks();
-  vi.mocked(tmdb.getPopularMovies).mockResolvedValue([
-    {
-      id: 1,
-      title: 'Movie 1',
-      vote_average: 7,
-      poster_path: '/x.jpg',
-      genre_ids: [28],
-      overview: '',
-      backdrop_path: null,
-      release_date: '',
-    },
-    {
-      id: 2,
-      title: 'Movie 2',
-      vote_average: 8,
-      poster_path: '/y.jpg',
-      genre_ids: [35],
-      overview: '',
-      backdrop_path: null,
-      release_date: '',
-    },
-  ]);
+  vi.mocked(tmdb.getPopularMovies).mockResolvedValue({
+    movies: [
+      {
+        id: 1,
+        title: 'Movie 1',
+        vote_average: 7,
+        poster_path: '/x.jpg',
+        genre_ids: [28],
+        overview: '',
+        backdrop_path: null,
+        release_date: '',
+      },
+      {
+        id: 2,
+        title: 'Movie 2',
+        vote_average: 8,
+        poster_path: '/y.jpg',
+        genre_ids: [35],
+        overview: '',
+        backdrop_path: null,
+        release_date: '',
+      },
+    ],
+    totalPages: 5,
+  });
 });
 
 describe('usePopularMovies', () => {

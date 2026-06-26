@@ -30,8 +30,11 @@ async function get<T>(
 /**
  * Fetches a paginated list of popular movies.
  */
-export function getPopularMovies(page = 1): Promise<Movie[]> {
-  return get('movie/popular', { page }).then((d) => (d as { results: Movie[] }).results);
+export function getPopularMovies(page = 1): Promise<{ movies: Movie[]; totalPages: number }> {
+  return get('movie/popular', { page }).then((d) => ({
+    movies: (d as { results?: Movie[] }).results || [],
+    totalPages: (d as { total_pages?: number }).total_pages || 1,
+  }));
 }
 
 /**
@@ -47,7 +50,7 @@ export function getTopRatedMovies(): Promise<Movie[]> {
  * Fetches upcoming movies.
  */
 export function getUpcomingMovies(): Promise<Movie[]> {
-  return get('movie/upcoming').then((d) => (d as { results: Movie[] }).results);
+  return get('movie/upcoming').then((d) => (d as { results?: Movie[] }).results || []);
 }
 
 /**
@@ -62,7 +65,8 @@ export function getMovieDetails(id: string | number): Promise<Movie> {
  */
 export function getMovieTrailer(id: string | number): Promise<string | null> {
   return get(`movie/${id}/videos`, { language: 'en-US' }).then((d) => {
-    const results = (d as { results: { key: string; site: string; type: string }[] }).results;
+    const results =
+      (d as { results?: { key: string; site: string; type: string }[] }).results || [];
     return results.find((v) => v.site === 'YouTube' && v.type === 'Trailer')?.key ?? null;
   });
 }
@@ -73,19 +77,22 @@ export function getMovieTrailer(id: string | number): Promise<string | null> {
 export function getMovieReviews(
   id: string | number,
 ): Promise<{ results: Review[]; total_results: number }> {
-  return get<{ results: Review[]; total_results: number }>(`movie/${id}/reviews`);
+  return get<{ results?: Review[]; total_results?: number }>(`movie/${id}/reviews`).then((d) => ({
+    results: d.results || [],
+    total_results: d.total_results || 0,
+  }));
 }
 
 /**
  * Fetches the full genre list.
  */
 export function getGenres(): Promise<Genre[]> {
-  return get('genre/movie/list').then((d) => (d as { genres: Genre[] }).genres);
+  return get('genre/movie/list').then((d) => (d as { genres?: Genre[] }).genres || []);
 }
 
 /**
  * Searches movies by query string.
  */
 export function searchMovies(query: string): Promise<Movie[]> {
-  return get('search/movie', { query }).then((d) => (d as { results: Movie[] }).results);
+  return get('search/movie', { query }).then((d) => (d as { results?: Movie[] }).results || []);
 }

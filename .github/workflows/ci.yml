@@ -5,12 +5,17 @@ on:
     branches: [main, feat/typescript, feat/nextjs]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   format:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@cdca7365b2dadb8f00858493d4c1e1a6f1a84db0 # v4
         with: { node-version: '20.9', cache: npm }
       - run: npm ci
       - run: npm run format:check
@@ -19,8 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: format
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@cdca7365b2dadb8f00858493d4c1e1a6f1a84db0 # v4
         with: { node-version: '20.9', cache: npm }
       - run: npm ci
       - run: npm run lint
@@ -29,8 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@cdca7365b2dadb8f00858493d4c1e1a6f1a84db0 # v4
         with: { node-version: '20.9', cache: npm }
       - run: npm ci
       - run: npm run typecheck
@@ -39,12 +48,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: typecheck
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@cdca7365b2dadb8f00858493d4c1e1a6f1a84db0 # v4
         with: { node-version: '20.9', cache: npm }
       - run: npm ci
       - run: npm run test:run -- --coverage
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: coverage
           path: coverage/
@@ -53,14 +64,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: unit
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@cdca7365b2dadb8f00858493d4c1e1a6f1a84db0 # v4
         with: { node-version: '20.9', cache: npm }
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run build
       - run: npm run e2e
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: failure()
         with:
           name: playwright-report
@@ -70,8 +83,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [unit, e2e]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@cdca7365b2dadb8f00858493d4c1e1a6f1a84db0 # v4
         with: { node-version: '20.9', cache: npm }
       - run: npm ci
       - run: npm run build

@@ -26,7 +26,7 @@ export default function MovieCard({
 }: MovieCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const rating = data ? Math.round(data.vote_average / 2) : 0;
+  const rating = data ? data.vote_average / 2 : 0;
 
   // 3D tilt effect
   useEffect(() => {
@@ -82,6 +82,13 @@ export default function MovieCard({
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>): void => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick();
+    }
+  };
+
   const isTopRated = cardStyle === 'top-rated-card';
 
   return (
@@ -89,6 +96,9 @@ export default function MovieCard({
       ref={cardRef}
       className={`${styles.card} ${isTopRated ? styles.topRated : styles.popular}`}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
       data-testid="movie-card"
       style={{ width, height, borderRadius: radius }}
     >

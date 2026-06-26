@@ -19,11 +19,22 @@ export function useMovieDetails(id: number | string | null): UseMovieDetailsResu
 
   useEffect(() => {
     if (!id) return;
+    let ignore = false;
     setLoading(true);
+    setError(null);
     getMovieDetails(id)
-      .then(setMovie)
-      .catch(setError)
-      .finally(() => setLoading(false));
+      .then((data) => {
+        if (!ignore) setMovie(data);
+      })
+      .catch((err) => {
+        if (!ignore) setError(err);
+      })
+      .finally(() => {
+        if (!ignore) setLoading(false);
+      });
+    return () => {
+      ignore = true;
+    };
   }, [id]);
 
   return { movie, loading, error };

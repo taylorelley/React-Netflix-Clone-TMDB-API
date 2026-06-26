@@ -29,37 +29,37 @@ export default function MovieDetails() {
   // GSAP entrance animations
   useEffect(() => {
     if (!movie) return;
-    const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
 
-    tl.fromTo(`.${styles.info} h1`, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2 })
-      .fromTo(
-        `.${styles.tagline}`,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8 },
-        '-=0.8',
-      )
-      .fromTo(
-        `.${styles.posterWrapper}`,
-        { scale: 0.92, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1 },
-        '-=0.8',
-      )
-      .fromTo(
-        `.${styles.metaRow} > *`,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.08, duration: 0.5 },
-        '-=0.6',
-      )
-      .fromTo(
-        `.${styles.overview}`,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6 },
-        '-=0.3',
-      );
+      tl.fromTo(`.${styles.info} h1`, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2 })
+        .fromTo(
+          `.${styles.tagline}`,
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8 },
+          '-=0.8',
+        )
+        .fromTo(
+          `.${styles.posterWrapper}`,
+          { scale: 0.92, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1 },
+          '-=0.8',
+        )
+        .fromTo(
+          `.${styles.metaRow} > *`,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.08, duration: 0.5 },
+          '-=0.6',
+        )
+        .fromTo(
+          `.${styles.overview}`,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.6 },
+          '-=0.3',
+        );
+    });
 
-    return () => {
-      tl.kill();
-    };
+    return () => ctx.revert();
   }, [movie]);
 
   // Parallax poster on scroll
@@ -77,7 +77,7 @@ export default function MovieDetails() {
 
   const backdropStyle = movie?.backdrop_path
     ? {
-        backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`,
+        backgroundImage: `url("https://image.tmdb.org/t/p/original${movie.backdrop_path}")`,
       }
     : {};
 
@@ -112,7 +112,7 @@ export default function MovieDetails() {
           <div ref={posterRef} className={styles.posterWrapper}>
             {movie?.poster_path ? (
               <Image
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
                 fill
                 className={styles.poster}
@@ -167,14 +167,14 @@ export default function MovieDetails() {
           {(reviews || []).slice(0, reviewNumber).map((item) => (
             <Review key={item.id} review={item} />
           ))}
-          {totalReviews > 0 && (
+          {reviews.length > 0 && (
             <button
               className={styles.loadMoreBtn}
-              onClick={() => setReviewNumber(reviewNumber >= totalReviews ? 3 : reviewNumber + 3)}
+              onClick={() => setReviewNumber(reviewNumber >= reviews.length ? 3 : reviewNumber + 3)}
             >
-              {reviewNumber >= totalReviews
+              {reviewNumber >= reviews.length
                 ? 'Show Less'
-                : `Load More (${totalReviews - reviewNumber} remaining)`}
+                : `Load More (${reviews.length - reviewNumber} remaining)`}
             </button>
           )}
         </div>

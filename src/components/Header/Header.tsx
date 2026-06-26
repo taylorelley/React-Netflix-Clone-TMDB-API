@@ -102,13 +102,18 @@ export default function Header() {
           )}
         </div>
 
-        <div className={styles.themeToggle} onClick={handleTheme}>
+        <button
+          type="button"
+          className={styles.themeToggle}
+          onClick={handleTheme}
+          aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
           {darkMode ? (
             <MdOutlineLightMode className={styles.themeIcon} />
           ) : (
             <MdOutlineDarkMode className={styles.themeIcon} />
           )}
-        </div>
+        </button>
 
         <button
           className={`${styles.hamburger} ${menuOpen ? styles.hamburgerOpen : ''}`}

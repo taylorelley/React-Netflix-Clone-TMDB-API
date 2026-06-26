@@ -21,14 +21,25 @@ export function useMovieReviews(id: number | string | null): UseMovieReviewsResu
 
   useEffect(() => {
     if (!id) return;
+    let ignore = false;
     setLoading(true);
+    setError(null);
     getMovieReviews(id)
       .then((data) => {
-        setReviews(data.results);
-        setTotalReviews(data.total_results);
+        if (!ignore) {
+          setReviews(data.results);
+          setTotalReviews(data.total_results);
+        }
       })
-      .catch(setError)
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        if (!ignore) setError(err);
+      })
+      .finally(() => {
+        if (!ignore) setLoading(false);
+      });
+    return () => {
+      ignore = true;
+    };
   }, [id]);
 
   return { reviews, totalReviews, loading, error };

@@ -69,6 +69,7 @@ vi.mock('@/hooks/usePopularMovies', () => ({
     ] as Movie[],
     loading: false,
     error: null,
+    totalPages: 10,
   }),
 }));
 vi.mock('@/hooks/useTopRatedMovies', () => ({

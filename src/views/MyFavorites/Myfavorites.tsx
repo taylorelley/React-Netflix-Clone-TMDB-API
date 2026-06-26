@@ -10,6 +10,7 @@ import styles from './MyFavorites.module.css';
 interface FavoriteEntry {
   movie: Array<{
     _id: string;
+    tmdb_id: number;
     poster_path: string | null;
     title: string;
     vote_average: number;
@@ -63,7 +64,7 @@ export default function MyFavorites() {
               const movie = item.movie[0];
               if (!movie) return null;
               const cardData: Movie = {
-                id: Number(movie._id),
+                id: movie.tmdb_id || Number(movie._id),
                 title: movie.title,
                 poster_path: movie.poster_path,
                 vote_average: movie.vote_average,

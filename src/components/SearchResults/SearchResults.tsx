@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Image from 'next/image';
 import noImage from '@/assets/no-image.svg.png';
 import type { Movie } from '@/types/tmdb';
@@ -13,12 +13,10 @@ interface SearchResultsProps {
 }
 
 export default function SearchResults({ movie, setQuery }: SearchResultsProps) {
-  const router = useRouter();
   const [imageError, setImageError] = useState<boolean>(false);
 
-  const handleNavigation = (): void => {
+  const handleClick = (): void => {
     setQuery('');
-    router.push(`/moviedetails/${movie.id}`);
   };
 
   const src: string =
@@ -27,7 +25,11 @@ export default function SearchResults({ movie, setQuery }: SearchResultsProps) {
       : `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
 
   return (
-    <div className={styles.searchResultsItem} onClick={handleNavigation}>
+    <Link
+      href={`/moviedetails/${movie.id}`}
+      className={styles.searchResultsItem}
+      onClick={handleClick}
+    >
       <Image
         className={styles.resultImg}
         src={src}
@@ -43,6 +45,6 @@ export default function SearchResults({ movie, setQuery }: SearchResultsProps) {
           <span className={styles.resultYear}>{movie.release_date.slice(0, 4)}</span>
         )}
       </div>
-    </div>
+    </Link>
   );
 }

@@ -95,6 +95,6 @@ e2e/                        Playwright E2E specs
 ## Notes
 
 - Dev server requires **Node.js 20.9+** (Next.js 16 hard minimum).
-- The app uses Next.js 16 Cache Components (`cacheComponents: true`). Layout children are wrapped in `<Suspense>` to allow client components to mount cleanly.
+- The app uses Next.js 16 with explicit caching via the `"use cache"` directive in the TMDB route handler. Layout children are wrapped in `<Suspense>` to allow client components to mount cleanly.
 - All client components carry the `'use client'` directive. Server-only code (the TMDB proxy) lives in `src/app/api/...`.
 - The exposed TMDB key `8ff72cfe0871eca79c1016ea37ac82c0` was published in git history; rotate it before going to production.

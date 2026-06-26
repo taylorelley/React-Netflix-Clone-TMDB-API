@@ -12,13 +12,6 @@ import { cacheLife } from 'next/cache';
 
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 
-class TmdbConfigError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'TmdbConfigError';
-  }
-}
-
 class TmdbUpstreamError extends Error {
   status: number;
   constructor(status: number, message: string) {
@@ -34,11 +27,23 @@ async function fetchFromTmdb(path: string, search: string, apiKey: string): Prom
   const params = new URLSearchParams(search);
   params.set('api_key', apiKey);
   const url = `${TMDB_BASE}/${path}?${params.toString()}`;
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new TmdbUpstreamError(res.status, `TMDB responded ${res.status}`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeout);
+    if (!res.ok) {
+      throw new TmdbUpstreamError(res.status, `TMDB responded ${res.status}`);
+    }
+    return res.json();
+  } catch (err) {
+    clearTimeout(timeout);
+    if (err instanceof TmdbUpstreamError) throw err;
+    if (err instanceof Error && err.name === 'AbortError') {
+      throw new TmdbUpstreamError(504, 'TMDB request timeout');
+    }
+    throw err;
   }
-  return res.json();
 }
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
@@ -61,12 +66,6 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ path
       return NextResponse.json(
         { error: err.message, code: 'TMDB_UPSTREAM_ERROR' },
         { status: err.status >= 400 && err.status < 600 ? err.status : 502 },
-      );
-    }
-    if (err instanceof TmdbConfigError) {
-      return NextResponse.json(
-        { error: err.message, code: 'TMDB_NOT_CONFIGURED' },
-        { status: 503 },
       );
     }
     const message = err instanceof Error ? err.message : 'Unknown error';

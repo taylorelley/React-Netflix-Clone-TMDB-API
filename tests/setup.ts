@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import { vi, beforeEach, afterEach } from 'vitest';
+import { vi } from 'vitest';
 
 // Mock next/navigation globally — components use useRouter/usePathname
 vi.mock('next/navigation', () => ({
@@ -56,17 +56,4 @@ vi.mock('react-player', () => {
     ),
   );
   return { default: ReactPlayer };
-});
-
-// Silence "not wrapped in act()" warnings in tests that don't observe state
-const originalError = console.error;
-beforeEach(() => {
-  console.error = (...args: unknown[]) => {
-    const msg = String(args[0] ?? '');
-    if (msg.includes('not wrapped in act')) return;
-    originalError(...(args as Parameters<typeof console.error>));
-  };
-});
-afterEach(() => {
-  console.error = originalError;
 });

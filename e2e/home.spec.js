@@ -73,16 +73,18 @@ test.describe('Home page', () => {
 
   test('renders 10 pagination numbers', async ({ page }) => {
     await page.goto('/');
+    const pagination = page.locator('[class*="pagination"]');
     const tens = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
     for (const n of tens) {
-      await expect(page.getByText(n, { exact: true })).toBeVisible();
+      await expect(pagination.getByText(n, { exact: true })).toBeVisible();
     }
   });
 
   test('clicking page 2 sets page state (page-2 highlighted)', async ({ page }) => {
     await page.goto('/');
-    await page.getByText('2', { exact: true }).click();
-    const current = page.locator('[class*="currentPage"]');
+    const pagination = page.locator('[class*="pagination"]');
+    await pagination.getByText('2', { exact: true }).click();
+    const current = pagination.locator('[class*="pageBtnActive"]');
     await expect(current).toHaveText('2');
   });
 });

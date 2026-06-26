@@ -16,9 +16,8 @@ export default function HomePage() {
   const ctx = useContext(ThemeContext);
   const darkMode = ctx?.darkMode ?? true;
   const [page, setPage] = useState<number>(1);
-  const { movies: popularMovies, loading } = usePopularMovies(page);
+  const { movies: popularMovies, loading, totalPages } = usePopularMovies(page);
   const { movies: topRatedMovies } = useTopRatedMovies();
-  const pageNumbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const popularRef = useRef<HTMLDivElement>(null);
   const topRatedRef = useRef<HTMLDivElement>(null);
@@ -133,7 +132,7 @@ export default function HomePage() {
             </div>
           )}
           <div className={styles.pagination}>
-            {pageNumbers.map((item) => (
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((item) => (
               <button
                 className={`${styles.pageBtn} ${item === page ? styles.pageBtnActive : ''}`}
                 key={item}

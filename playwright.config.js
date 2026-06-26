@@ -13,7 +13,7 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   webServer: {
-    command: 'npx next start -p 4173',
+    command: 'npx next dev -p 4173',
     url: 'http://localhost:4173',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

@@ -11,28 +11,31 @@ import {
 } from '../mocks/tmdb';
 
 beforeEach(() => {
-  getPopularMovies.mockResolvedValue([
-    {
-      id: 1,
-      title: 'Test Movie',
-      vote_average: 7,
-      poster_path: '/x.jpg',
-      genre_ids: [28],
-      overview: '',
-      backdrop_path: null,
-      release_date: '',
-    },
-    {
-      id: 2,
-      title: 'Another Movie',
-      vote_average: 8.5,
-      poster_path: '/y.jpg',
-      genre_ids: [35],
-      overview: '',
-      backdrop_path: null,
-      release_date: '',
-    },
-  ]);
+  getPopularMovies.mockResolvedValue({
+    movies: [
+      {
+        id: 1,
+        title: 'Test Movie',
+        vote_average: 7,
+        poster_path: '/x.jpg',
+        genre_ids: [28],
+        overview: '',
+        backdrop_path: null,
+        release_date: '',
+      },
+      {
+        id: 2,
+        title: 'Another Movie',
+        vote_average: 8.5,
+        poster_path: '/y.jpg',
+        genre_ids: [35],
+        overview: '',
+        backdrop_path: null,
+        release_date: '',
+      },
+    ],
+    totalPages: 5,
+  });
   getTopRatedMovies.mockResolvedValue([]);
   getUpcomingMovies.mockResolvedValue([
     {
@@ -116,7 +119,7 @@ beforeEach(() => {
 describe('TMDB API client functions (using test mocks)', () => {
   it('returns mocked popular movies', async () => {
     const result = await getPopularMovies();
-    expect(result).toEqual([
+    expect(result.movies).toEqual([
       {
         id: 1,
         title: 'Test Movie',
@@ -138,6 +141,7 @@ describe('TMDB API client functions (using test mocks)', () => {
         release_date: '',
       },
     ]);
+    expect(result.totalPages).toBe(5);
   });
 
   it('returns mocked top-rated movies', async () => {

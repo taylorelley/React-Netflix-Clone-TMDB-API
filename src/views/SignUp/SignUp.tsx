@@ -29,6 +29,10 @@ export default function SignUp() {
         setMessage('There is another user with that email. Try again');
         return;
       }
+      if (!res.ok) {
+        setMessage(`Signup failed: ${res.status}`);
+        return;
+      }
       setPassword('');
       setEmail('');
       setUsername('');

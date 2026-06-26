@@ -3,15 +3,15 @@ import { test, expect } from '@playwright/test';
 test.describe('Auth flow', () => {
   test('signin page renders form with email + password', async ({ page }) => {
     await page.goto('/signin');
-    await expect(page.getByPlaceholder('Enter Email')).toBeVisible();
-    await expect(page.getByPlaceholder('Enter Password')).toBeVisible();
+    await expect(page.getByLabel('Email')).toBeVisible();
+    await expect(page.getByLabel('Password')).toBeVisible();
   });
 
   test('signup page renders all three inputs', async ({ page }) => {
     await page.goto('/signup');
-    await expect(page.getByPlaceholder('Enter Email')).toBeVisible();
-    await expect(page.getByPlaceholder('Enter Password')).toBeVisible();
-    await expect(page.getByPlaceholder('Enter Username')).toBeVisible();
+    await expect(page.getByLabel('Email')).toBeVisible();
+    await expect(page.getByLabel('Password')).toBeVisible();
+    await expect(page.getByLabel('Username')).toBeVisible();
   });
 
   test('already-loggedin shown when token in localStorage', async ({ page }) => {
@@ -34,8 +34,8 @@ test.describe('Auth flow', () => {
       });
     });
     await page.goto('/signin');
-    await page.getByPlaceholder('Enter Email').fill('test@example.com');
-    await page.getByPlaceholder('Enter Password').fill('secret');
+    await page.getByLabel('Email').fill('test@example.com');
+    await page.getByLabel('Password').fill('secret');
     await page.getByRole('button', { name: /Sign In/i }).click();
     await expect.poll(() => requests.length).toBe(1);
     expect(requests[0]).toEqual({ email: 'test@example.com', password: 'secret' });

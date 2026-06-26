@@ -51,9 +51,9 @@ describe('SearchResults', () => {
   });
 
   it('navigates to movie details on click', () => {
-    pushMock.mockClear();
     const { container } = renderResult();
-    fireEvent.click(container.querySelector('[class*="searchResultsItem"]')!);
-    expect(pushMock).toHaveBeenCalledWith('/moviedetails/7');
+    const link = container.querySelector('a');
+    expect(link).toBeTruthy();
+    expect(link!.getAttribute('href')).toBe('/moviedetails/7');
   });
 });

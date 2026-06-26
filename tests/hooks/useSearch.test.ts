@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, waitFor, act } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { renderHook, act } from '@testing-library/react';
 import * as tmdb from '@/lib/tmdb';
 
 vi.mock('@/lib/tmdb', () => import('../mocks/tmdb'));
@@ -7,6 +7,7 @@ vi.mock('@/lib/tmdb', () => import('../mocks/tmdb'));
 import { useSearch } from '@/hooks/useSearch';
 
 beforeEach(() => {
+  vi.useFakeTimers();
   vi.clearAllMocks();
   vi.mocked(tmdb.searchMovies).mockResolvedValue([
     {
@@ -20,6 +21,10 @@ beforeEach(() => {
       release_date: '',
     },
   ]);
+});
+
+afterEach(() => {
+  vi.useRealTimers();
 });
 
 describe('useSearch', () => {
@@ -38,36 +43,51 @@ describe('useSearch', () => {
 
   it('returns results after debounce (delay 0)', async () => {
     const { result } = renderHook(() => useSearch('matrix', 0));
-    await waitFor(() => expect(result.current.results).toHaveLength(1));
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+    expect(result.current.results).toHaveLength(1);
     expect(result.current.results[0]?.title).toBe('Result');
   });
 
   it('debounces call when delay > 0', async () => {
     renderHook(() => useSearch('matrix', 100));
-    await new Promise((r) => setTimeout(r, 30));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(30);
+    });
     expect(vi.mocked(tmdb.searchMovies)).not.toHaveBeenCalled();
-    await new Promise((r) => setTimeout(r, 100));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(100);
+    });
     expect(vi.mocked(tmdb.searchMovies)).toHaveBeenCalledWith('matrix');
   });
 
   it('sets loading to true during debounce window', async () => {
     const { result } = renderHook(() => useSearch('matrix', 50));
     expect(result.current.loading).toBe(true);
-    await new Promise((r) => setTimeout(r, 60));
-    await waitFor(() => expect(result.current.loading).toBe(false));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(60);
+    });
+    expect(result.current.loading).toBe(false);
   });
 
   it('clears results on search error', async () => {
     vi.mocked(tmdb.searchMovies).mockRejectedValueOnce(new Error('boom'));
     const { result } = renderHook(() => useSearch('matrix', 0));
-    await waitFor(() => expect(result.current.results).toEqual([]));
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+    expect(result.current.results).toEqual([]);
   });
 
   it('clears results when query becomes empty', async () => {
     const { result, rerender } = renderHook(({ q }: { q: string }) => useSearch(q, 0), {
       initialProps: { q: 'matrix' },
     });
-    await waitFor(() => expect(result.current.results).toHaveLength(1));
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+    expect(result.current.results).toHaveLength(1);
     rerender({ q: '' });
     expect(result.current.results).toEqual([]);
     expect(result.current.loading).toBe(false);
@@ -77,9 +97,13 @@ describe('useSearch', () => {
     const { rerender } = renderHook(({ q }: { q: string }) => useSearch(q, 50), {
       initialProps: { q: 'matrix' },
     });
-    await new Promise((r) => setTimeout(r, 20));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(20);
+    });
     rerender({ q: 'other' });
-    await new Promise((r) => setTimeout(r, 60));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(60);
+    });
     expect(vi.mocked(tmdb.searchMovies)).toHaveBeenCalledTimes(1);
     expect(vi.mocked(tmdb.searchMovies)).toHaveBeenCalledWith('other');
   });
